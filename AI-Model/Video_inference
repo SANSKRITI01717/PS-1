@@ -1,0 +1,291 @@
+import collections
+import queue
+import re
+import threading
+import time
+import cv2
+from fast_plate_ocr import LicensePlateRecognizer
+import numpy as np
+import torch
+from ultralytics import YOLO
+
+
+# --- Helper Function ---
+def fix_indian_plate(text):
+    text = re.sub(r"[^A-Z0-9]", "", text.upper())
+    length = len(text)
+    if length not in (9, 10):
+        return text
+
+    char_to_num = {
+        "O": "0", "Q": "0", "I": "1", "L": "1", "Z": "2",
+        "S": "5", "B": "8", "G": "6", "A": "4",
+    }
+    num_to_char = {
+        "0": "O", "1": "I", "2": "Z", "5": "S", "8": "B",
+        "4": "A", "6": "G",
+    }
+
+    pattern = (
+        ["char", "char", "num", "num", "char", "char", "num", "num", "num", "num"]
+        if length == 10
+        else ["char", "char", "num", "char", "char", "num", "num", "num", "num"]
+    )
+
+    return "".join(
+        num_to_char.get(c, c) if p == "char" else char_to_num.get(c, c)
+        for c, p in zip(text, pattern)
+    )
+
+
+# --- Load Models ---
+print("Loading Models...")
+MODEL_PATH = "/path/to/model"  # Or your .pt model
+model = YOLO(MODEL_PATH)
+if str(MODEL_PATH).endswith(".pt"):
+    model.to("cuda")
+    model.fuse()
+
+recognizer = LicensePlateRecognizer("cct-xs-v2-global-model")
+
+# Warm up recognizer
+dummy_crop = np.zeros((64, 128, 3), dtype=np.uint8)
+for _ in range(3):
+    recognizer.run(dummy_crop)
+torch.cuda.synchronize()
+print("Models loaded and warmed up.")
+
+# --- Shared State & Pipeline Configuration ---
+tracked_plates = {}
+lock = threading.Lock()
+ocr_queue = queue.Queue(maxsize=20)
+stop_worker = threading.Event()
+
+MAX_SCANS = 5            # 3 sharp scans are more reliable than 10 blurry ones
+PADDING = 5
+FRAME_SKIP = 1           # Inferred every Nth frame
+MIN_SHARPNESS_FLOOR = 60.0  # Absolute minimum clarity to even consider OCR
+SHARPNESS_MARGIN = 1.15     # Must be 15% sharper than prior best to re-trigger OCR
+
+# --- Profiling Accumulators ---
+frame_count = 0
+inference_frames = 0
+total_read_time = 0.0
+total_filter_time = 0.0
+
+yolo_pre_total = 0.0
+yolo_inf_total = 0.0
+yolo_post_total = 0.0
+yolo_tracker_overhead_total = 0.0
+
+worker_metrics_lock = threading.Lock()
+ocr_invocations = 0
+total_queue_wait_time = 0.0
+total_crop_prep_time = 0.0
+total_ocr_infer_time = 0.0
+
+
+# --- Background Worker Function ---
+def ocr_worker():
+    global ocr_invocations, total_queue_wait_time, total_crop_prep_time, total_ocr_infer_time
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+
+    while not stop_worker.is_set():
+        try:
+            track_id, crop, score, enqueued_at = ocr_queue.get(timeout=0.1)
+            queue_latency = time.perf_counter() - enqueued_at
+        except queue.Empty:
+            continue
+
+        t_prep_start = time.perf_counter()
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        enhanced = clahe.apply(gray)
+        enhanced = cv2.resize(enhanced, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+        processed_crop = cv2.cvtColor(enhanced, cv2.COLOR_GRAY2BGR)
+        prep_duration = time.perf_counter() - t_prep_start
+
+        t_ocr_start = time.perf_counter()
+        predictions = recognizer.run(processed_crop)
+        ocr_duration = time.perf_counter() - t_ocr_start
+
+        with worker_metrics_lock:
+            ocr_invocations += 1
+            total_queue_wait_time += queue_latency
+            total_crop_prep_time += prep_duration
+            total_ocr_infer_time += ocr_duration
+
+        if predictions:
+            pred = predictions[0]
+            if not (hasattr(pred, "confidence") and pred.confidence < 0.6):
+                cleaned = fix_indian_plate(pred.plate.strip())
+                with lock:
+                    if track_id in tracked_plates and tracked_plates[track_id]["final"] is None:
+                        tracked_plates[track_id]["history"].append(cleaned)
+                        tracked_plates[track_id]["is_processing"] = False
+                        print(f"  [OCR Hit] ID {track_id} | Sharpness: {score:.1f} | Text: {cleaned}")
+
+                        if len(tracked_plates[track_id]["history"]) >= MAX_SCANS:
+                            best = collections.Counter(tracked_plates[track_id]["history"]).most_common(1)[0][0]
+                            tracked_plates[track_id]["final"] = best
+                            print(f"🎯 [LOCKED] Track ID {track_id} -> {best}")
+        else:
+            with lock:
+                if track_id in tracked_plates:
+                    tracked_plates[track_id]["is_processing"] = False
+
+        ocr_queue.task_done()
+
+
+worker_thread = threading.Thread(target=ocr_worker, daemon=True)
+worker_thread.start()
+
+stream_source = "/path/to/video"
+cap = cv2.VideoCapture(stream_source)
+
+cached_boxes = []
+cached_ids = []
+
+start_overall = time.perf_counter()
+print("Processing video headlessly with Peak-Sharpness Gating...")
+
+while cap.isOpened():
+    t_read_start = time.perf_counter()
+    ret, frame = cap.read()
+    total_read_time += time.perf_counter() - t_read_start
+
+    if not ret:
+        break
+
+    frame_count += 1
+    h, w, _ = frame.shape
+
+    # 1. Detection & Tracking Stage
+    if frame_count % FRAME_SKIP == 0 or frame_count == 1:
+        inference_frames += 1
+        t_track_start = time.perf_counter()
+        results = model.track(
+            source=frame,
+            conf=0.5,
+            persist=True,
+            tracker="bytetrack.yaml",
+            verbose=False,
+        )
+        t_track_total = (time.perf_counter() - t_track_start) * 1000
+
+        r = results[0]
+        pre = r.speed.get("preprocess", 0.0)
+        inf = r.speed.get("inference", 0.0)
+        post = r.speed.get("postprocess", 0.0)
+
+        yolo_pre_total += pre
+        yolo_inf_total += inf
+        yolo_post_total += post
+        yolo_tracker_overhead_total += max(0.0, t_track_total - (pre + inf + post))
+
+        cached_boxes = r.boxes.xyxy.cpu().numpy()
+        cached_ids = (
+            r.boxes.id.int().cpu().tolist()
+            if r.boxes.id is not None
+            else [None] * len(cached_boxes)
+        )
+
+    # 2. Sharpness Evaluation & Queue Dispatch Stage
+    t_filter_start = time.perf_counter()
+    for box, track_id in zip(cached_boxes, cached_ids):
+        if track_id is None:
+            continue
+
+        x1, y1, x2, y2 = map(int, box)
+        x1_p = max(0, x1 - PADDING)
+        y1_p = max(0, y1 - PADDING)
+        x2_p = min(w, x2 + PADDING)
+        y2_p = min(h, y2 + PADDING)
+
+        if y2_p <= y1_p or x2_p <= x1_p:
+            continue
+
+        with lock:
+            if track_id not in tracked_plates:
+                tracked_plates[track_id] = {
+                    "history": [],
+                    "final": None,
+                    "is_processing": False,
+                    "best_sharpness": 0.0,
+                }
+            plate_data = tracked_plates[track_id]
+            is_locked = plate_data["final"] is not None
+            is_busy = plate_data["is_processing"]
+            best_sharpness = plate_data["best_sharpness"]
+
+        # Only evaluate sharpness if plate isn't locked and worker isn't busy
+        if not is_locked and not is_busy:
+            crop = frame[y1_p:y2_p, x1_p:x2_p]
+            if crop.size == 0:
+                continue
+
+            # Normalized Focus Metric (Resolution normalized to 128x64)
+            gray_crop = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+            norm_crop = cv2.resize(gray_crop, (128, 64), interpolation=cv2.INTER_AREA)
+            sharpness_score = cv2.Laplacian(norm_crop, cv2.CV_64F).var()
+
+            # Peak Sharpness Decision Logic
+            is_first_valid_scan = (best_sharpness == 0.0 and sharpness_score >= MIN_SHARPNESS_FLOOR)
+            is_better_peak = (sharpness_score >= best_sharpness * SHARPNESS_MARGIN)
+
+            if is_first_valid_scan or is_better_peak:
+                crop_copy = crop.copy()
+                try:
+                    ocr_queue.put_nowait((track_id, crop_copy, sharpness_score, time.perf_counter()))
+                    with lock:
+                        tracked_plates[track_id]["is_processing"] = True
+                        tracked_plates[track_id]["best_sharpness"] = sharpness_score
+                except queue.Full:
+                    pass
+
+    total_filter_time += time.perf_counter() - t_filter_start
+
+total_elapsed = time.perf_counter() - start_overall
+
+stop_worker.set()
+worker_thread.join(timeout=1.0)
+cap.release()
+
+# --- Output Summary ---
+print("\n================ DETECTED PLATES ================")
+for t_id, data in tracked_plates.items():
+    final_val = data["final"]
+    if not final_val and data["history"]:
+        final_val = collections.Counter(data["history"]).most_common(1)[0][0]
+    status = final_val if final_val else "Unrecognized"
+    locked_state = "Locked" if data["final"] else "Incomplete"
+    print(f"Vehicle Track ID {t_id:2d}: {status:<15} ({locked_state} | Scans: {len(data['history'])} | Peak Sharpness: {data['best_sharpness']:.1f})")
+print("=================================================")
+
+# --- Detailed Intrastage Performance Report ---
+print("\n================ COMPREHENSIVE BENCHMARK ================")
+print(f"Total Elapsed Time : {total_elapsed:.2f} s")
+print(f"Total Frames       : {frame_count} ({inference_frames} inferred, {frame_count - inference_frames} skipped)")
+print(f"Pipeline FPS       : {frame_count / total_elapsed:.1f} FPS")
+print("---------------------------------------------------------")
+if frame_count > 0:
+    print("AVERAGE PER-FRAME LATENCY BUDGET:")
+    print(f"  ├─ Video Read (cap.read)      : {total_read_time / frame_count * 1000:.2f} ms")
+    print(f"  ├─ Sharpness & Queue Dispatch : {total_filter_time / frame_count * 1000:.2f} ms")
+    if inference_frames > 0:
+        det_avg = (yolo_pre_total + yolo_inf_total + yolo_post_total + yolo_tracker_overhead_total) / inference_frames
+        print(f"  └─ YOLO Step (when executed)  : {det_avg:.2f} ms")
+        print(f"       ├─ YOLO Preprocess       : {yolo_pre_total / inference_frames:.2f} ms")
+        print(f"       ├─ YOLO Inference        : {yolo_inf_total / inference_frames:.2f} ms")
+        print(f"       ├─ YOLO Postprocess/NMS  : {yolo_post_total / inference_frames:.2f} ms")
+        print(f"       └─ ByteTrack + Sync      : {yolo_tracker_overhead_total / inference_frames:.2f} ms")
+
+print("---------------------------------------------------------")
+if ocr_invocations > 0:
+    print("WORKER THREAD LATENCY (Per Plate Crop):")
+    print(f"  ├─ Total OCR Invocations      : {ocr_invocations}")
+    print(f"  ├─ Queue Wait Latency         : {total_queue_wait_time / ocr_invocations * 1000:.2f} ms")
+    print(f"  ├─ Crop Preprocessing         : {total_crop_prep_time / ocr_invocations * 1000:.2f} ms")
+    print(f"  └─ Fast-Plate-OCR Inference   : {total_ocr_infer_time / ocr_invocations * 1000:.2f} ms")
+else:
+    print("WORKER THREAD: No OCR crops met the sharpness threshold.")
+print("=========================================================")

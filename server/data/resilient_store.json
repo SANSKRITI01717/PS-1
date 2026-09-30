@@ -1,0 +1,1256 @@
+{
+  "cameras": [
+    {
+      "cameraId": "CAM-IND-01",
+      "name": "MG Road Junction Terminal",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "status": "ACTIVE",
+      "feedType": "SIMULATED",
+      "direction": "NORTHBOUND",
+      "detectionCount": 25,
+      "_id": "cam_z3nblx56c",
+      "createdAt": "2026-09-30T17:26:52.192Z",
+      "updatedAt": "2026-09-30T17:55:54.769Z",
+      "lastSeen": "2026-09-30T17:55:54.769Z"
+    },
+    {
+      "cameraId": "CAM-IND-02",
+      "name": "Cyber City Hub Gate 3",
+      "location": "Cyber Hub Rapid Transit Way",
+      "coordinates": {
+        "lat": 28.4905,
+        "lng": 77.0898
+      },
+      "status": "ACTIVE",
+      "feedType": "SIMULATED",
+      "direction": "EASTBOUND",
+      "detectionCount": 25,
+      "_id": "cam_bf2gx00mr",
+      "createdAt": "2026-09-30T17:26:52.193Z",
+      "updatedAt": "2026-09-30T17:36:06.250Z",
+      "lastSeen": "2026-09-30T17:36:06.250Z"
+    },
+    {
+      "cameraId": "CAM-IND-03",
+      "name": "Golf Course Road Flyover",
+      "location": "Golf Course Road Sector 42",
+      "coordinates": {
+        "lat": 28.4623,
+        "lng": 77.0984
+      },
+      "status": "ACTIVE",
+      "feedType": "SIMULATED",
+      "direction": "SOUTHBOUND",
+      "detectionCount": 12,
+      "_id": "cam_q46c3fir6",
+      "createdAt": "2026-09-30T17:26:52.193Z",
+      "updatedAt": "2026-09-30T17:52:02.900Z",
+      "lastSeen": "2026-09-30T17:52:02.900Z"
+    },
+    {
+      "cameraId": "CAM-IND-04",
+      "name": "IFFCO Chowk Expressway Ingress",
+      "location": "NH-48 Interchange Expressway",
+      "coordinates": {
+        "lat": 28.4789,
+        "lng": 77.0543
+      },
+      "status": "ACTIVE",
+      "feedType": "SIMULATED",
+      "direction": "WESTBOUND",
+      "detectionCount": 33,
+      "_id": "cam_yrkvaliyz",
+      "createdAt": "2026-09-30T17:26:52.193Z",
+      "updatedAt": "2026-09-30T17:38:10.953Z",
+      "lastSeen": "2026-09-30T17:38:10.953Z"
+    },
+    {
+      "cameraId": "CAM-IND-05",
+      "name": "Railway Junction Outer Gate",
+      "location": "Old City Station Road",
+      "coordinates": {
+        "lat": 28.455,
+        "lng": 77.0315
+      },
+      "status": "ACTIVE",
+      "feedType": "SIMULATED",
+      "direction": "NORTHBOUND",
+      "detectionCount": 18,
+      "_id": "cam_atzjnpabd",
+      "createdAt": "2026-09-30T17:26:52.193Z",
+      "updatedAt": "2026-09-30T17:26:52.193Z",
+      "lastSeen": "2026-09-30T17:26:52.193Z"
+    }
+  ],
+  "detections": [
+    {
+      "plateNumber": "DL01AB9999",
+      "confidence": 0.965,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:27:27.390Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 120,
+        "y1": 210,
+        "x2": 340,
+        "y2": 290
+      },
+      "direction": "NORTHBOUND",
+      "speed": 62.4,
+      "vehicleType": "SUV",
+      "metadata": {},
+      "_id": "det_1790789247391_dqewk",
+      "createdAt": "2026-09-30T17:27:27.391Z",
+      "updatedAt": "2026-09-30T17:27:27.391Z"
+    },
+    {
+      "plateNumber": "DL01CA1234",
+      "confidence": 0.9643,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:30:28.412Z",
+      "imagePath": "C:/Users/rajku/Desktop/PS-1/AI-Model/test_samples/car_delhi.jpg",
+      "bbox": {
+        "x1": 245,
+        "y1": 303,
+        "x2": 395,
+        "y2": 352,
+        "width": 150,
+        "height": 49
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {
+        "sharpness": 7711.9,
+        "yoloConfidence": 0.6432,
+        "inferenceTimeMs": 1707.26
+      },
+      "_id": "det_1790789428413_dnlpz",
+      "createdAt": "2026-09-30T17:30:28.414Z",
+      "updatedAt": "2026-09-30T17:30:28.414Z"
+    },
+    {
+      "plateNumber": "MH12AB1233",
+      "confidence": 0.9868,
+      "cameraId": "CAM-IND-02",
+      "timestamp": "2026-09-30T17:30:33.460Z",
+      "imagePath": "C:/Users/rajku/Desktop/PS-1/AI-Model/test_samples/car_mumbai.jpg",
+      "bbox": {
+        "x1": 245,
+        "y1": 304,
+        "x2": 396,
+        "y2": 349,
+        "width": 151,
+        "height": 45
+      },
+      "direction": "EASTBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {
+        "sharpness": 6154.6,
+        "yoloConfidence": 0.5843,
+        "inferenceTimeMs": 2335.96
+      },
+      "_id": "det_1790789433460_ei96s",
+      "createdAt": "2026-09-30T17:30:33.460Z",
+      "updatedAt": "2026-09-30T17:30:33.460Z"
+    },
+    {
+      "plateNumber": "DL01CA1234",
+      "confidence": 0.9643,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:31:08.230Z",
+      "imagePath": "C:/Users/rajku/Desktop/PS-1/AI-Model/test_samples/car_delhi.jpg",
+      "bbox": {
+        "x1": 245,
+        "y1": 303,
+        "x2": 395,
+        "y2": 352,
+        "width": 150,
+        "height": 49
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {
+        "sharpness": 7711.9,
+        "yoloConfidence": 0.6432,
+        "inferenceTimeMs": 1650.97
+      },
+      "_id": "det_1790789468230_s3jvs",
+      "createdAt": "2026-09-30T17:31:08.230Z",
+      "updatedAt": "2026-09-30T17:31:08.230Z"
+    },
+    {
+      "plateNumber": "MH12AB1233",
+      "confidence": 0.9868,
+      "cameraId": "CAM-IND-02",
+      "timestamp": "2026-09-30T17:31:12.084Z",
+      "imagePath": "C:/Users/rajku/Desktop/PS-1/AI-Model/test_samples/car_mumbai.jpg",
+      "bbox": {
+        "x1": 245,
+        "y1": 304,
+        "x2": 396,
+        "y2": 349,
+        "width": 151,
+        "height": 45
+      },
+      "direction": "EASTBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {
+        "sharpness": 6154.6,
+        "yoloConfidence": 0.5843,
+        "inferenceTimeMs": 1548.14
+      },
+      "_id": "det_1790789472084_75v26",
+      "createdAt": "2026-09-30T17:31:12.084Z",
+      "updatedAt": "2026-09-30T17:31:12.084Z"
+    },
+    {
+      "plateNumber": "DL01CA1234",
+      "confidence": 0.9643,
+      "cameraId": "CAM-METRO-09",
+      "timestamp": "2026-09-30T17:34:37.294Z",
+      "imagePath": "C:/Users/rajku/Desktop/PS-1/AI-Model/test_samples/car_delhi.jpg",
+      "bbox": {
+        "x1": 245,
+        "y1": 303,
+        "x2": 395,
+        "y2": 352,
+        "width": 150,
+        "height": 49
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {
+        "sharpness": 7711.9,
+        "yoloConfidence": 0.6432,
+        "inferenceTimeMs": 1797.97
+      },
+      "_id": "det_1790789677294_his5s",
+      "createdAt": "2026-09-30T17:34:37.295Z",
+      "updatedAt": "2026-09-30T17:34:37.295Z"
+    },
+    {
+      "plateNumber": "MP04AB1234",
+      "confidence": 0.94,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T10:02:15.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": 52,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789766199_3g10b",
+      "createdAt": "2026-09-30T17:36:06.200Z",
+      "updatedAt": "2026-09-30T17:36:06.200Z"
+    },
+    {
+      "plateNumber": "MP04AB1234",
+      "confidence": 0.98,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T10:02:45.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": 50,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789766210_bpdu9",
+      "createdAt": "2026-09-30T17:36:06.210Z",
+      "updatedAt": "2026-09-30T17:36:06.210Z"
+    },
+    {
+      "plateNumber": "MP04AB1234",
+      "confidence": 0.95,
+      "cameraId": "CAM-IND-02",
+      "timestamp": "2026-09-30T10:11:42.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "EASTBOUND",
+      "speed": 58,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789766250_obdj6",
+      "createdAt": "2026-09-30T17:36:06.250Z",
+      "updatedAt": "2026-09-30T17:36:06.250Z"
+    },
+    {
+      "plateNumber": "MP04AB1234",
+      "confidence": 0.92,
+      "cameraId": "CAM-IND-04",
+      "timestamp": "2026-09-30T10:29:10.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "WESTBOUND",
+      "speed": 60,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789766264_rtovw",
+      "createdAt": "2026-09-30T17:36:06.264Z",
+      "updatedAt": "2026-09-30T17:36:06.264Z"
+    },
+    {
+      "plateNumber": "MP04AB1234",
+      "confidence": 0.96,
+      "cameraId": "CAM-IND-03",
+      "timestamp": "2026-09-30T10:20:05.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "SOUTHBOUND",
+      "speed": 54,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789766278_isd27",
+      "createdAt": "2026-09-30T17:36:06.278Z",
+      "updatedAt": "2026-09-30T17:36:06.278Z"
+    },
+    {
+      "plateNumber": "DL01CA1234",
+      "confidence": 0.95,
+      "cameraId": "CAM-IND-03",
+      "timestamp": "2026-09-30T10:35:00.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "SOUTHBOUND",
+      "speed": 57,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789890949_3w6rk",
+      "createdAt": "2026-09-30T17:38:10.949Z",
+      "updatedAt": "2026-09-30T17:38:10.949Z"
+    },
+    {
+      "plateNumber": "DL01CA1234",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-04",
+      "timestamp": "2026-09-30T10:48:30.000Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "WESTBOUND",
+      "speed": 62,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790789890953_1axbx",
+      "createdAt": "2026-09-30T17:38:10.953Z",
+      "updatedAt": "2026-09-30T17:38:10.953Z"
+    },
+    {
+      "plateNumber": "DL01AB9999",
+      "confidence": 0.985,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:41:14.814Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": 74.2,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790074814_fj5mk",
+      "createdAt": "2026-09-30T17:41:14.814Z",
+      "updatedAt": "2026-09-30T17:41:14.814Z"
+    },
+    {
+      "plateNumber": "DL01AB9999",
+      "confidence": 0.985,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:43:06.361Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": 74.2,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790186361_ltnkk",
+      "createdAt": "2026-09-30T17:43:06.361Z",
+      "updatedAt": "2026-09-30T17:43:06.361Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "CRITICAL",
+        "plateNumber": "DL01AB9999",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle DL01AB9999 spotted at MG Road Junction Terminal. Reason: Wanted - Vehicle involved in highway robbery",
+        "detectionId": "det_1790790186361_ltnkk",
+        "timestamp": "2026-09-30T17:43:06.361Z",
+        "_id": "alt_1790790186361_bmejn",
+        "status": "OPEN",
+        "createdAt": "2026-09-30T17:43:06.361Z"
+      }
+    },
+    {
+      "plateNumber": "TS09UB9999",
+      "confidence": 0.96,
+      "cameraId": "CAM-001",
+      "timestamp": "2026-09-30T17:51:01.669Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790661687_g8wfx",
+      "createdAt": "2026-09-30T17:51:01.687Z",
+      "updatedAt": "2026-09-30T17:51:01.687Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "CRITICAL",
+        "plateNumber": "TS09UB9999",
+        "cameraId": "CAM-001",
+        "location": "Detected Camera Sector",
+        "coordinates": {
+          "lat": 0,
+          "lng": 0
+        },
+        "message": "ALERT: Blacklisted vehicle TS09UB9999 spotted at CAM-001. Reason: Suspected armed transit across state border",
+        "detectionId": "det_1790790661687_g8wfx",
+        "timestamp": "2026-09-30T17:51:01.669Z",
+        "_id": "alt_1790790661687_8u4n7",
+        "status": "OPEN",
+        "createdAt": "2026-09-30T17:51:01.687Z"
+      }
+    },
+    {
+      "plateNumber": "UP32AZ8888",
+      "confidence": 0.94,
+      "cameraId": "CAM-001",
+      "timestamp": "2026-09-30T17:50:51.689Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790661691_zhret",
+      "createdAt": "2026-09-30T17:51:01.691Z",
+      "updatedAt": "2026-09-30T17:51:01.691Z"
+    },
+    {
+      "plateNumber": "UP32AZ8888",
+      "confidence": 0.95,
+      "cameraId": "CAM-003",
+      "timestamp": "2026-09-30T17:51:01.689Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "INBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790661694_j3j3t",
+      "createdAt": "2026-09-30T17:51:01.694Z",
+      "updatedAt": "2026-09-30T17:51:01.694Z"
+    },
+    {
+      "plateNumber": "TS09UB9999",
+      "confidence": 0.96,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:52:02.874Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790722887_ofemw",
+      "createdAt": "2026-09-30T17:52:02.887Z",
+      "updatedAt": "2026-09-30T17:52:02.887Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "CRITICAL",
+        "plateNumber": "TS09UB9999",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle TS09UB9999 spotted at MG Road Junction Terminal. Reason: Suspected armed transit across state border",
+        "detectionId": "det_1790790722887_ofemw",
+        "timestamp": "2026-09-30T17:52:02.874Z",
+        "_id": "alt_1790790722888_n8ahe",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T17:52:02.888Z",
+        "resolvedAt": "2026-09-30T17:52:02.920Z",
+        "resolvedBy": "Duty Officer Sharma"
+      }
+    },
+    {
+      "plateNumber": "UP32AZ8888",
+      "confidence": 0.94,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:51:52.889Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790722892_h6ufl",
+      "createdAt": "2026-09-30T17:52:02.892Z",
+      "updatedAt": "2026-09-30T17:52:02.892Z"
+    },
+    {
+      "plateNumber": "UP32AZ8888",
+      "confidence": 0.95,
+      "cameraId": "CAM-IND-03",
+      "timestamp": "2026-09-30T17:52:02.889Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "SOUTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790722900_tviui",
+      "createdAt": "2026-09-30T17:52:02.900Z",
+      "updatedAt": "2026-09-30T17:52:02.900Z",
+      "anomalyAlert": {
+        "type": "SUSPICIOUS_ROUTE",
+        "severity": "CRITICAL",
+        "plateNumber": "UP32AZ8888",
+        "cameraId": "CAM-IND-03",
+        "location": "MG Road Junction Terminal → Golf Course Road Flyover",
+        "coordinates": {
+          "lat": 28.4623,
+          "lng": 77.0984
+        },
+        "message": "ANOMALY ALERT: Physically implausible transit detected for UP32AZ8888. Covered 2092m in 10s (Est. Speed: 753.1 km/h). Possible cloned plate or extreme speeding.",
+        "_id": "alt_1790790722901_xygrv",
+        "status": "OPEN",
+        "timestamp": "2026-09-30T17:52:02.901Z",
+        "createdAt": "2026-09-30T17:52:02.901Z"
+      }
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:55:22.503Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790922511_ivdek",
+      "createdAt": "2026-09-30T17:55:22.511Z",
+      "updatedAt": "2026-09-30T17:55:22.511Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "HIGH",
+        "plateNumber": "KA05MJ4444",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+        "detectionId": "det_1790790922511_ivdek",
+        "timestamp": "2026-09-30T17:55:22.503Z",
+        "_id": "alt_1790790922511_mkltv",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T17:55:22.511Z",
+        "resolvedAt": "2026-09-30T17:55:22.518Z",
+        "resolvedBy": "System Verifier"
+      }
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T17:55:54.770Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790790954769_gq587",
+      "createdAt": "2026-09-30T17:55:54.769Z",
+      "updatedAt": "2026-09-30T17:55:54.769Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "HIGH",
+        "plateNumber": "KA05MJ4444",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+        "detectionId": "det_1790790954769_gq587",
+        "timestamp": "2026-09-30T17:55:54.770Z",
+        "_id": "alt_1790790954769_pqgb2",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T17:55:54.769Z",
+        "resolvedAt": "2026-09-30T17:55:54.772Z",
+        "resolvedBy": "System Verifier"
+      }
+    }
+  ],
+  "vehicles": [
+    {
+      "_id": "veh_1790789247391_l0exe",
+      "plateNumber": "DL01AB9999",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:27:27.391Z",
+      "lastSeen": "2026-09-30T17:43:06.361Z",
+      "totalDetections": 3,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790789428417_a6vga",
+      "plateNumber": "DL01CA1234",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:30:28.417Z",
+      "lastSeen": "2026-09-30T17:38:10.953Z",
+      "totalDetections": 5,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790789433461_4wfgl",
+      "plateNumber": "MH12AB1233",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:30:33.461Z",
+      "lastSeen": "2026-09-30T17:31:12.085Z",
+      "totalDetections": 2,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790789766200_rsndc",
+      "plateNumber": "MP04AB1234",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:36:06.200Z",
+      "lastSeen": "2026-09-30T17:36:06.278Z",
+      "totalDetections": 5,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790790661687_p4ej8",
+      "plateNumber": "TS09UB9999",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:51:01.687Z",
+      "lastSeen": "2026-09-30T17:52:02.888Z",
+      "totalDetections": 2,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790790661691_conq8",
+      "plateNumber": "UP32AZ8888",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:51:01.691Z",
+      "lastSeen": "2026-09-30T17:52:02.901Z",
+      "totalDetections": 4,
+      "isBlacklisted": false,
+      "flagReason": ""
+    },
+    {
+      "_id": "veh_1790790922511_74oc8",
+      "plateNumber": "KA05MJ4444",
+      "vehicleType": "CAR",
+      "makeModel": "UNKNOWN",
+      "color": "UNKNOWN",
+      "firstSeen": "2026-09-30T17:55:22.511Z",
+      "lastSeen": "2026-09-30T17:55:54.769Z",
+      "totalDetections": 2,
+      "isBlacklisted": false,
+      "flagReason": ""
+    }
+  ],
+  "trajectoryEvents": [
+    {
+      "vehiclePlate": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:27:27.390Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": 62.4,
+      "detectionId": "det_1790789247391_dqewk",
+      "_id": "traj_1790789247392_wie9f",
+      "createdAt": "2026-09-30T17:27:27.392Z"
+    },
+    {
+      "vehiclePlate": "DL01CA1234",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:30:28.412Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790789428413_dnlpz",
+      "_id": "traj_1790789428417_telwe",
+      "createdAt": "2026-09-30T17:30:28.417Z"
+    },
+    {
+      "vehiclePlate": "MH12AB1233",
+      "cameraId": "CAM-IND-02",
+      "cameraName": "Cyber City Hub Gate 3",
+      "timestamp": "2026-09-30T17:30:33.460Z",
+      "coordinates": {
+        "lat": 28.4905,
+        "lng": 77.0898
+      },
+      "direction": "EASTBOUND",
+      "speed": null,
+      "detectionId": "det_1790789433460_ei96s",
+      "_id": "traj_1790789433461_1mgnx",
+      "createdAt": "2026-09-30T17:30:33.461Z"
+    },
+    {
+      "vehiclePlate": "DL01CA1234",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:31:08.230Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790789468230_s3jvs",
+      "_id": "traj_1790789468231_mirll",
+      "createdAt": "2026-09-30T17:31:08.231Z"
+    },
+    {
+      "vehiclePlate": "MH12AB1233",
+      "cameraId": "CAM-IND-02",
+      "cameraName": "Cyber City Hub Gate 3",
+      "timestamp": "2026-09-30T17:31:12.084Z",
+      "coordinates": {
+        "lat": 28.4905,
+        "lng": 77.0898
+      },
+      "direction": "EASTBOUND",
+      "speed": null,
+      "detectionId": "det_1790789472084_75v26",
+      "_id": "traj_1790789472085_ymbth",
+      "createdAt": "2026-09-30T17:31:12.085Z"
+    },
+    {
+      "vehiclePlate": "DL01CA1234",
+      "cameraId": "CAM-METRO-09",
+      "cameraName": "Metro Corridor Junction Outer",
+      "timestamp": "2026-09-30T17:34:37.294Z",
+      "coordinates": {
+        "lat": 28.4682,
+        "lng": 77.0628
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790789677294_his5s",
+      "_id": "traj_1790789677295_btg2i",
+      "createdAt": "2026-09-30T17:34:37.295Z"
+    },
+    {
+      "vehiclePlate": "MP04AB1234",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T10:02:15.000Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": 52,
+      "detectionId": "det_1790789766199_3g10b",
+      "_id": "traj_1790789766200_1k335",
+      "createdAt": "2026-09-30T17:36:06.200Z"
+    },
+    {
+      "vehiclePlate": "MP04AB1234",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T10:02:45.000Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": 50,
+      "detectionId": "det_1790789766210_bpdu9",
+      "_id": "traj_1790789766237_xdq1x",
+      "createdAt": "2026-09-30T17:36:06.237Z"
+    },
+    {
+      "vehiclePlate": "MP04AB1234",
+      "cameraId": "CAM-IND-02",
+      "cameraName": "Cyber City Hub Gate 3",
+      "timestamp": "2026-09-30T10:11:42.000Z",
+      "coordinates": {
+        "lat": 28.4905,
+        "lng": 77.0898
+      },
+      "direction": "EASTBOUND",
+      "speed": 58,
+      "detectionId": "det_1790789766250_obdj6",
+      "_id": "traj_1790789766251_2slib",
+      "createdAt": "2026-09-30T17:36:06.251Z"
+    },
+    {
+      "vehiclePlate": "MP04AB1234",
+      "cameraId": "CAM-IND-04",
+      "cameraName": "IFFCO Chowk Expressway Ingress",
+      "timestamp": "2026-09-30T10:29:10.000Z",
+      "coordinates": {
+        "lat": 28.4789,
+        "lng": 77.0543
+      },
+      "direction": "WESTBOUND",
+      "speed": 60,
+      "detectionId": "det_1790789766264_rtovw",
+      "_id": "traj_1790789766265_zy0n4",
+      "createdAt": "2026-09-30T17:36:06.265Z"
+    },
+    {
+      "vehiclePlate": "MP04AB1234",
+      "cameraId": "CAM-IND-03",
+      "cameraName": "Golf Course Road Flyover",
+      "timestamp": "2026-09-30T10:20:05.000Z",
+      "coordinates": {
+        "lat": 28.4623,
+        "lng": 77.0984
+      },
+      "direction": "SOUTHBOUND",
+      "speed": 54,
+      "detectionId": "det_1790789766278_isd27",
+      "_id": "traj_1790789766278_tga0k",
+      "createdAt": "2026-09-30T17:36:06.278Z"
+    },
+    {
+      "vehiclePlate": "DL01CA1234",
+      "cameraId": "CAM-IND-03",
+      "cameraName": "Golf Course Road Flyover",
+      "timestamp": "2026-09-30T10:35:00.000Z",
+      "coordinates": {
+        "lat": 28.4623,
+        "lng": 77.0984
+      },
+      "direction": "SOUTHBOUND",
+      "speed": 57,
+      "detectionId": "det_1790789890949_3w6rk",
+      "_id": "traj_1790789890950_mzgle",
+      "createdAt": "2026-09-30T17:38:10.950Z"
+    },
+    {
+      "vehiclePlate": "DL01CA1234",
+      "cameraId": "CAM-IND-04",
+      "cameraName": "IFFCO Chowk Expressway Ingress",
+      "timestamp": "2026-09-30T10:48:30.000Z",
+      "coordinates": {
+        "lat": 28.4789,
+        "lng": 77.0543
+      },
+      "direction": "WESTBOUND",
+      "speed": 62,
+      "detectionId": "det_1790789890953_1axbx",
+      "_id": "traj_1790789890953_a441m",
+      "createdAt": "2026-09-30T17:38:10.953Z"
+    },
+    {
+      "vehiclePlate": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:41:14.814Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": 74.2,
+      "detectionId": "det_1790790074814_fj5mk",
+      "_id": "traj_1790790074815_wqcac",
+      "createdAt": "2026-09-30T17:41:14.815Z"
+    },
+    {
+      "vehiclePlate": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:43:06.361Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": 74.2,
+      "detectionId": "det_1790790186361_ltnkk",
+      "_id": "traj_1790790186361_iboqg",
+      "createdAt": "2026-09-30T17:43:06.361Z"
+    },
+    {
+      "vehiclePlate": "TS09UB9999",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:52:02.874Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "detectionId": "det_1790790722887_ofemw",
+      "_id": "traj_1790790722888_tllfb",
+      "createdAt": "2026-09-30T17:52:02.888Z"
+    },
+    {
+      "vehiclePlate": "UP32AZ8888",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:51:52.889Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "FORWARD",
+      "speed": null,
+      "detectionId": "det_1790790722892_h6ufl",
+      "_id": "traj_1790790722892_ag5dc",
+      "createdAt": "2026-09-30T17:52:02.892Z"
+    },
+    {
+      "vehiclePlate": "UP32AZ8888",
+      "cameraId": "CAM-IND-03",
+      "cameraName": "Golf Course Road Flyover",
+      "timestamp": "2026-09-30T17:52:02.889Z",
+      "coordinates": {
+        "lat": 28.4623,
+        "lng": 77.0984
+      },
+      "direction": "SOUTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790790722900_tviui",
+      "_id": "traj_1790790722901_wq9ym",
+      "createdAt": "2026-09-30T17:52:02.901Z"
+    },
+    {
+      "vehiclePlate": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:55:22.503Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790790922511_ivdek",
+      "_id": "traj_1790790922511_y14to",
+      "createdAt": "2026-09-30T17:55:22.511Z"
+    },
+    {
+      "vehiclePlate": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T17:55:54.770Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790790954769_gq587",
+      "_id": "traj_1790790954769_xfzry",
+      "createdAt": "2026-09-30T17:55:54.769Z"
+    }
+  ],
+  "blacklist": [
+    {
+      "plateNumber": "DL01AB9999",
+      "reason": "Wanted - Vehicle involved in highway robbery",
+      "severity": "CRITICAL",
+      "addedBy": "State Police Cyber Cell",
+      "notes": "",
+      "_id": "blk_1790789247359",
+      "isActive": true,
+      "createdAt": "2026-09-30T17:27:27.359Z",
+      "updatedAt": "2026-09-30T17:27:27.359Z"
+    },
+    {
+      "plateNumber": "TS09UB9999",
+      "reason": "Suspected armed transit across state border",
+      "severity": "CRITICAL",
+      "addedBy": "Inter-State Crime Intelligence Bureau",
+      "notes": "",
+      "_id": "blk_1790790661661",
+      "isActive": true,
+      "createdAt": "2026-09-30T17:51:01.661Z",
+      "updatedAt": "2026-09-30T17:52:02.859Z"
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "reason": "Flagged for transit violation",
+      "severity": "HIGH",
+      "addedBy": "Central Patrol Command",
+      "notes": "",
+      "_id": "blk_1790790922494",
+      "isActive": true,
+      "createdAt": "2026-09-30T17:55:22.494Z",
+      "updatedAt": "2026-09-30T17:55:54.763Z"
+    }
+  ],
+  "alerts": [
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "CRITICAL",
+      "plateNumber": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle DL01AB9999 spotted at MG Road Junction Terminal. Reason: Wanted - Vehicle involved in highway robbery",
+      "detectionId": "det_1790789247391_dqewk",
+      "timestamp": "2026-09-30T17:27:27.390Z",
+      "_id": "alt_1790789247392_0t6yd",
+      "status": "OPEN",
+      "createdAt": "2026-09-30T17:27:27.392Z"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "CRITICAL",
+      "plateNumber": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle DL01AB9999 spotted at MG Road Junction Terminal. Reason: Wanted - Vehicle involved in highway robbery",
+      "detectionId": "det_1790790074814_fj5mk",
+      "timestamp": "2026-09-30T17:41:14.814Z",
+      "_id": "alt_1790790074815_48e3h",
+      "status": "OPEN",
+      "createdAt": "2026-09-30T17:41:14.815Z"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "CRITICAL",
+      "plateNumber": "DL01AB9999",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle DL01AB9999 spotted at MG Road Junction Terminal. Reason: Wanted - Vehicle involved in highway robbery",
+      "detectionId": "det_1790790186361_ltnkk",
+      "timestamp": "2026-09-30T17:43:06.361Z",
+      "_id": "alt_1790790186361_bmejn",
+      "status": "OPEN",
+      "createdAt": "2026-09-30T17:43:06.361Z"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "CRITICAL",
+      "plateNumber": "TS09UB9999",
+      "cameraId": "CAM-001",
+      "location": "Detected Camera Sector",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      },
+      "message": "ALERT: Blacklisted vehicle TS09UB9999 spotted at CAM-001. Reason: Suspected armed transit across state border",
+      "detectionId": "det_1790790661687_g8wfx",
+      "timestamp": "2026-09-30T17:51:01.669Z",
+      "_id": "alt_1790790661687_8u4n7",
+      "status": "OPEN",
+      "createdAt": "2026-09-30T17:51:01.687Z"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "CRITICAL",
+      "plateNumber": "TS09UB9999",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle TS09UB9999 spotted at MG Road Junction Terminal. Reason: Suspected armed transit across state border",
+      "detectionId": "det_1790790722887_ofemw",
+      "timestamp": "2026-09-30T17:52:02.874Z",
+      "_id": "alt_1790790722888_n8ahe",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T17:52:02.888Z",
+      "resolvedAt": "2026-09-30T17:52:02.920Z",
+      "resolvedBy": "Duty Officer Sharma"
+    },
+    {
+      "type": "SUSPICIOUS_ROUTE",
+      "severity": "CRITICAL",
+      "plateNumber": "UP32AZ8888",
+      "cameraId": "CAM-IND-03",
+      "location": "MG Road Junction Terminal → Golf Course Road Flyover",
+      "coordinates": {
+        "lat": 28.4623,
+        "lng": 77.0984
+      },
+      "message": "ANOMALY ALERT: Physically implausible transit detected for UP32AZ8888. Covered 2092m in 10s (Est. Speed: 753.1 km/h). Possible cloned plate or extreme speeding.",
+      "_id": "alt_1790790722901_xygrv",
+      "status": "OPEN",
+      "timestamp": "2026-09-30T17:52:02.901Z",
+      "createdAt": "2026-09-30T17:52:02.901Z"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "HIGH",
+      "plateNumber": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+      "detectionId": "det_1790790922511_ivdek",
+      "timestamp": "2026-09-30T17:55:22.503Z",
+      "_id": "alt_1790790922511_mkltv",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T17:55:22.511Z",
+      "resolvedAt": "2026-09-30T17:55:22.518Z",
+      "resolvedBy": "System Verifier"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "HIGH",
+      "plateNumber": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+      "detectionId": "det_1790790954769_gq587",
+      "timestamp": "2026-09-30T17:55:54.770Z",
+      "_id": "alt_1790790954769_pqgb2",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T17:55:54.769Z",
+      "resolvedAt": "2026-09-30T17:55:54.772Z",
+      "resolvedBy": "System Verifier"
+    }
+  ],
+  "trafficSnapshots": [],
+  "routeSegments": []
+}
