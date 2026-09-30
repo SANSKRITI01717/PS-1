@@ -17,7 +17,7 @@ async function runTrajectoryTests() {
     }
   }
 
-  const testPlate = 'MP04AB1234';
+  const testPlate = 'TRJ' + Date.now().toString().slice(-6);
 
   // 1. Seed Multi-Camera Detections (including repeated sightings & out-of-order insertion)
   await test('Seed Multi-Camera Detections (Out-of-Order & Repeated Scans)', async () => {

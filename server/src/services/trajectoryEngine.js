@@ -83,6 +83,7 @@ export class TrajectoryEngine {
           location: cam.location,
           latitude: coords.lat,
           longitude: coords.lng,
+          coordinates: { lat: coords.lat, lng: coords.lng },
           firstSeen: detTime.toISOString(),
           lastSeen: detTime.toISOString(),
           timestamp: detTime.toISOString(), // primary timestamp

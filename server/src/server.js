@@ -93,13 +93,25 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, async () => {
+server.listen(PORT, '0.0.0.0', async () => {
   console.log(`=======================================================`);
   console.log(` ANPR & Traffic Intelligence Engine - Node.js Server `);
   console.log(` Running on port: http://localhost:${PORT}`);
   console.log(` Health Check   : http://localhost:${PORT}/api/health`);
   console.log(`=======================================================`);
   await connectDB();
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.warn(`[Server] Port ${PORT} busy, retrying in 1s...`);
+    setTimeout(() => {
+      server.close();
+      server.listen(PORT, '0.0.0.0');
+    }, 1000);
+  } else {
+    console.error('[Server Error]', err);
+  }
 });
 
 export { app, server, io };
