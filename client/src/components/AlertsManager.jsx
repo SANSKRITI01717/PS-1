@@ -29,7 +29,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
     plateNumber: '',
     reason: '',
     severity: 'CRITICAL',
-    addedBy: 'State Police Cyber Cell',
+    addedBy: 'Traffic Enforcement',
     notes: ''
   });
 
@@ -106,7 +106,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
           plateNumber: '',
           reason: '',
           severity: 'CRITICAL',
-          addedBy: 'State Police Cyber Cell',
+          addedBy: 'Traffic Enforcement',
           notes: ''
         });
         fetchData();
@@ -180,27 +180,28 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '14px'
+        gap: '14px',
+        boxShadow: 'var(--shadow-sm)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{
             width: '40px',
             height: '40px',
             borderRadius: '8px',
-            backgroundColor: 'rgba(239, 68, 68, 0.12)',
+            backgroundColor: '#fee2e2',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#f87171'
+            color: '#dc2626'
           }}>
             <ShieldAlert size={22} />
           </div>
           <div>
             <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-main)' }}>
-              Blacklist Watchlist & Anomaly Alert Center
+              Vehicle Watchlist & Security Alerts
             </div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-              Automated plate lookup, rapid transit detection, speed violations, and incident triage
+              Watchlist vehicle flagging and security incident triage
             </div>
           </div>
         </div>
@@ -211,7 +212,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            backgroundColor: '#ef4444',
+            backgroundColor: '#dc2626',
             color: '#ffffff',
             border: 'none',
             padding: '8px 16px',
@@ -219,7 +220,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
             fontSize: '12px',
             fontWeight: 700,
             cursor: 'pointer',
-            boxShadow: '0 2px 10px rgba(239, 68, 68, 0.3)'
+            boxShadow: '0 1px 3px rgba(220, 38, 38, 0.3)',
+            transition: 'background-color 0.15s ease'
           }}
         >
           <Plus size={16} /> Flag Vehicle / Blacklist
@@ -237,18 +239,27 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
           padding: '20px',
           display: 'flex',
           flexDirection: 'column',
-          maxHeight: '720px'
+          maxHeight: '720px',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)' }}>
+              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', letterSpacing: '0.02em' }}>
                 ENFORCEMENT WATCHLIST ({blacklist.length})
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                 Vehicles flagged for immediate interception
               </div>
             </div>
-            <span style={{ fontSize: '11px', color: 'var(--accent-cyan)' }}>
+            <span style={{
+              fontSize: '11px',
+              fontWeight: 700,
+              padding: '3px 8px',
+              borderRadius: '9999px',
+              backgroundColor: '#eff6ff',
+              color: 'var(--accent-blue)',
+              border: '1px solid #bfdbfe'
+            }}>
               {blacklist.filter(b => b.isActive !== false).length} Active
             </span>
           </div>
@@ -264,10 +275,12 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                   key={item._id || idx}
                   style={{
                     backgroundColor: 'var(--bg-card)',
-                    border: `1px solid ${item.isActive !== false ? 'rgba(239, 68, 68, 0.3)' : 'var(--border-subtle)'}`,
+                    border: `1px solid ${item.isActive !== false ? '#fecaca' : 'var(--border-subtle)'}`,
+                    borderLeft: item.isActive !== false ? '3px solid #dc2626' : '3px solid #cbd5e1',
                     borderRadius: '8px',
                     padding: '12px 14px',
-                    opacity: item.isActive !== false ? 1 : 0.6
+                    opacity: item.isActive !== false ? 1 : 0.65,
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.03)'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -276,7 +289,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                         fontFamily: 'var(--font-mono)',
                         fontSize: '15px',
                         fontWeight: 800,
-                        color: item.isActive !== false ? '#ffffff' : 'var(--text-muted)'
+                        color: 'var(--text-main)',
+                        letterSpacing: '0.04em'
                       }}>
                         {item.plateNumber}
                       </span>
@@ -285,9 +299,9 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                         fontWeight: 700,
                         padding: '2px 6px',
                         borderRadius: '4px',
-                        backgroundColor: item.severity === 'CRITICAL' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                        color: item.severity === 'CRITICAL' ? '#f87171' : '#fbbf24',
-                        border: `1px solid ${item.severity === 'CRITICAL' ? '#f87171' : '#fbbf24'}40`
+                        backgroundColor: item.severity === 'CRITICAL' ? '#fee2e2' : item.severity === 'HIGH' ? '#fef3c7' : '#f1f5f9',
+                        color: item.severity === 'CRITICAL' ? '#b91c1c' : item.severity === 'HIGH' ? '#b45309' : '#475569',
+                        border: `1px solid ${item.severity === 'CRITICAL' ? '#fca5a5' : item.severity === 'HIGH' ? '#fcd34d' : '#cbd5e1'}`
                       }}>
                         {item.severity}
                       </span>
@@ -297,26 +311,26 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       <button
                         onClick={() => toggleBlacklistStatus(item)}
                         title={item.isActive !== false ? 'Deactivate Flag' : 'Reactivate Flag'}
-                        style={{ background: 'none', border: 'none', color: item.isActive !== false ? '#34d399' : 'var(--text-faint)', cursor: 'pointer' }}
+                        style={{ background: 'none', border: 'none', color: item.isActive !== false ? '#16a34a' : 'var(--text-faint)', cursor: 'pointer' }}
                       >
                         {item.isActive !== false ? <ToggleRight size={22} /> : <ToggleLeft size={22} />}
                       </button>
                       <button
                         onClick={() => handleDeleteBlacklist(item.plateNumber)}
                         title="Remove from Watchlist"
-                        style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer' }}
+                        style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer' }}
                       >
                         <Trash2 size={15} />
                       </button>
                     </div>
                   </div>
 
-                  <div style={{ fontSize: '12px', color: 'var(--text-main)', marginTop: '6px' }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-main)', marginTop: '6px', lineHeight: 1.4 }}>
                     {item.reason}
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', fontSize: '10px', color: 'var(--text-faint)' }}>
-                    <span>Added By: {item.addedBy}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', fontSize: '11px', color: 'var(--text-muted)' }}>
+                    <span>Added By: <strong>{item.addedBy}</strong></span>
                     <span>{new Date(item.createdAt || Date.now()).toLocaleDateString()}</span>
                   </div>
                 </div>
@@ -333,12 +347,13 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
           padding: '20px',
           display: 'flex',
           flexDirection: 'column',
-          maxHeight: '720px'
+          maxHeight: '720px',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
             <div>
               <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Zap size={16} color="#f87171" />
+                <Zap size={16} color="#dc2626" />
                 SECURITY & ANOMALY INCIDENTS ({filteredAlerts.length})
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
@@ -347,7 +362,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
             </div>
 
             {/* Filter Tabs */}
-            <div style={{ display: 'flex', backgroundColor: 'var(--bg-primary)', padding: '2px', borderRadius: '6px', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', backgroundColor: '#f1f5f9', padding: '3px', borderRadius: '6px', border: '1px solid var(--border-subtle)' }}>
               {['OPEN', 'ACKNOWLEDGED', 'RESOLVED', 'ALL'].map(st => (
                 <button
                   key={st}
@@ -360,7 +375,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                     borderRadius: '4px',
                     fontSize: '11px',
                     fontWeight: 600,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                 >
                   {st}
@@ -380,12 +396,14 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                   key={al._id || idx}
                   style={{
                     backgroundColor: 'var(--bg-card)',
-                    border: `1px solid ${al.severity === 'CRITICAL' ? 'rgba(239, 68, 68, 0.4)' : 'var(--border-subtle)'}`,
+                    border: `1px solid ${al.severity === 'CRITICAL' ? '#fecaca' : 'var(--border-subtle)'}`,
+                    borderLeft: `4px solid ${al.severity === 'CRITICAL' ? '#dc2626' : al.severity === 'HIGH' ? '#f59e0b' : '#2563eb'}`,
                     borderRadius: '8px',
                     padding: '14px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '8px'
+                    gap: '8px',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.03)'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -395,12 +413,13 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                         fontWeight: 800,
                         padding: '2px 6px',
                         borderRadius: '4px',
-                        backgroundColor: al.severity === 'CRITICAL' ? '#ef4444' : al.severity === 'HIGH' ? '#f59e0b' : '#3b82f6',
-                        color: '#ffffff'
+                        backgroundColor: al.severity === 'CRITICAL' ? '#fee2e2' : al.severity === 'HIGH' ? '#fef3c7' : '#eff6ff',
+                        color: al.severity === 'CRITICAL' ? '#b91c1c' : al.severity === 'HIGH' ? '#b45309' : '#1d4ed8',
+                        border: `1px solid ${al.severity === 'CRITICAL' ? '#fca5a5' : al.severity === 'HIGH' ? '#fcd34d' : '#bfdbfe'}`
                       }}>
                         {al.severity}
                       </span>
-                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#f8fafc' }}>
+                      <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-main)' }}>
                         {al.type}
                       </span>
                     </div>
@@ -408,10 +427,11 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                     <span style={{
                       fontSize: '10px',
                       fontWeight: 700,
-                      padding: '2px 6px',
-                      borderRadius: '4px',
-                      backgroundColor: al.status === 'OPEN' ? 'rgba(239, 68, 68, 0.15)' : al.status === 'ACKNOWLEDGED' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-                      color: al.status === 'OPEN' ? '#f87171' : al.status === 'ACKNOWLEDGED' ? '#fbbf24' : '#34d399'
+                      padding: '2px 8px',
+                      borderRadius: '9999px',
+                      backgroundColor: al.status === 'OPEN' ? '#fee2e2' : al.status === 'ACKNOWLEDGED' ? '#fef3c7' : '#dcfce7',
+                      color: al.status === 'OPEN' ? '#b91c1c' : al.status === 'ACKNOWLEDGED' ? '#b45309' : '#15803d',
+                      border: `1px solid ${al.status === 'OPEN' ? '#fca5a5' : al.status === 'ACKNOWLEDGED' ? '#fcd34d' : '#86efac'}`
                     }}>
                       {al.status}
                     </span>
@@ -420,18 +440,18 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                   {al.plateNumber && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Target Plate:</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', fontWeight: 800, color: 'var(--accent-cyan)' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', fontWeight: 800, color: 'var(--accent-blue)' }}>
                         {al.plateNumber}
                       </span>
                     </div>
                   )}
 
-                  <div style={{ fontSize: '12px', color: '#e2e8f0', lineHeight: 1.5 }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-main)', lineHeight: 1.5 }}>
                     {al.message}
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '6px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: '11px', color: 'var(--text-faint)' }}>
-                    <span>Terminal: {al.cameraId} ({al.location})</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '6px', borderTop: '1px solid var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)' }}>
+                    <span>Terminal: <strong>{al.cameraId}</strong> ({al.location})</span>
                     <span style={{ fontFamily: 'var(--font-mono)' }}>{new Date(al.timestamp).toLocaleTimeString()}</span>
                   </div>
 
@@ -441,9 +461,9 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       <button
                         onClick={() => onNavigateToTrajectory && onNavigateToTrajectory(al.plateNumber)}
                         style={{
-                          backgroundColor: 'rgba(56, 189, 248, 0.12)',
-                          color: '#38bdf8',
-                          border: '1px solid rgba(56, 189, 248, 0.3)',
+                          backgroundColor: '#eff6ff',
+                          color: '#1d4ed8',
+                          border: '1px solid #bfdbfe',
                           padding: '4px 10px',
                           borderRadius: '4px',
                           fontSize: '11px',
@@ -451,7 +471,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '4px'
+                          gap: '4px',
+                          transition: 'background-color 0.15s ease'
                         }}
                       >
                         <Navigation size={12} /> View Trajectory
@@ -462,14 +483,15 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       <button
                         onClick={() => handleUpdateAlertStatus(al._id, 'ACKNOWLEDGED')}
                         style={{
-                          backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                          color: '#fbbf24',
-                          border: '1px solid rgba(245, 158, 11, 0.3)',
+                          backgroundColor: '#fffbeb',
+                          color: '#b45309',
+                          border: '1px solid #fde68a',
                           padding: '4px 10px',
                           borderRadius: '4px',
                           fontSize: '11px',
                           fontWeight: 600,
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          transition: 'background-color 0.15s ease'
                         }}
                       >
                         Acknowledge
@@ -480,9 +502,9 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       <button
                         onClick={() => handleUpdateAlertStatus(al._id, 'RESOLVED')}
                         style={{
-                          backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                          color: '#34d399',
-                          border: '1px solid rgba(16, 185, 129, 0.3)',
+                          backgroundColor: '#f0fdf4',
+                          color: '#15803d',
+                          border: '1px solid #bbf7d0',
                           padding: '4px 10px',
                           borderRadius: '4px',
                           fontSize: '11px',
@@ -490,7 +512,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '4px'
+                          gap: '4px',
+                          transition: 'background-color 0.15s ease'
                         }}
                       >
                         <Check size={12} /> Resolve Incident
@@ -512,29 +535,30 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          backgroundColor: 'rgba(15, 23, 42, 0.5)',
+          backdropFilter: 'blur(2px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 100
         }}>
           <div style={{
-            backgroundColor: 'var(--bg-card)',
+            backgroundColor: '#ffffff',
             border: '1px solid var(--border-subtle)',
             borderRadius: '12px',
             width: '440px',
             maxWidth: '90%',
             padding: '24px',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)'
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)'
           }}>
-            <div style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <ShieldAlert size={18} color="#ef4444" />
+            <div style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)' }}>
+              <ShieldAlert size={18} color="#dc2626" />
               Flag Vehicle on Enforcement Watchlist
             </div>
 
-            <form onSubmit={handleAddBlacklist} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <form onSubmit={handleAddBlacklist} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
-                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>License Plate Number</label>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>License Plate Number</label>
                 <input
                   type="text"
                   required
@@ -545,8 +569,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-main)',
                     fontSize: '13px',
                     fontFamily: 'var(--font-mono)',
@@ -556,7 +580,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
               </div>
 
               <div>
-                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Flag Reason / Incident Context</label>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Flag Reason / Incident Context</label>
                 <input
                   type="text"
                   required
@@ -567,8 +591,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-main)',
                     fontSize: '13px'
                   }}
@@ -577,7 +601,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Severity Level</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Severity Level</label>
                   <select
                     value={blacklistForm.severity}
                     onChange={e => setBlacklistForm({ ...blacklistForm, severity: e.target.value })}
@@ -585,8 +609,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
@@ -598,7 +622,7 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Issuing Authority</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Issuing Authority</label>
                   <input
                     type="text"
                     value={blacklistForm.addedBy}
@@ -607,8 +631,8 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
@@ -616,13 +640,13 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
                   style={{
-                    backgroundColor: 'transparent',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-muted)',
                     padding: '8px 16px',
                     borderRadius: '6px',
@@ -636,14 +660,15 @@ export default function AlertsManager({ socket, onNavigateToTrajectory }) {
                 <button
                   type="submit"
                   style={{
-                    backgroundColor: '#ef4444',
+                    backgroundColor: '#dc2626',
                     border: 'none',
                     color: '#ffffff',
                     padding: '8px 18px',
                     borderRadius: '6px',
                     fontSize: '12px',
                     fontWeight: 700,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(220, 38, 38, 0.3)'
                   }}
                 >
                   Confirm Watchlist Flag

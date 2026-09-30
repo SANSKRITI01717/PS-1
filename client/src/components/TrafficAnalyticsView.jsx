@@ -131,37 +131,42 @@ export default function TrafficAnalyticsView() {
       {
         label: 'Hourly Volume',
         data: hourlyCounts,
-        backgroundColor: 'rgba(6, 182, 212, 0.45)',
-        borderColor: '#06b6d4',
+        backgroundColor: 'rgba(37, 99, 235, 0.10)',
+        borderColor: '#2563eb',
         borderWidth: 2,
         borderRadius: 4,
         tension: 0.35,
-        fill: true
+        fill: true,
+        pointBackgroundColor: '#2563eb',
+        pointRadius: 3
       }
     ]
   };
 
-  const hourlyChartOptions = {
+  const lightChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#0f172a',
-        titleColor: '#38bdf8',
-        bodyColor: '#f8fafc',
-        borderColor: '#334155',
-        borderWidth: 1
+        backgroundColor: '#ffffff',
+        titleColor: '#0f172a',
+        bodyColor: '#475569',
+        borderColor: '#e2e8f0',
+        borderWidth: 1,
+        padding: 10,
+        boxPadding: 4,
+        usePointStyle: true
       }
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#94a3b8', font: { size: 10, family: 'monospace' }, maxRotation: 0 }
+        grid: { color: '#f1f5f9' },
+        ticks: { color: '#64748b', font: { size: 10, family: 'var(--font-mono)' }, maxRotation: 0 }
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#94a3b8', font: { size: 10, family: 'monospace' }, stepSize: 1 }
+        grid: { color: '#f1f5f9' },
+        ticks: { color: '#64748b', font: { size: 10, family: 'var(--font-mono)' }, stepSize: 1 }
       }
     }
   };
@@ -177,12 +182,12 @@ export default function TrafficAnalyticsView() {
         label: 'Total Sightings',
         data: cameraCounts,
         backgroundColor: [
-          '#38bdf8',
-          '#10b981',
-          '#f59e0b',
-          '#818cf8',
-          '#ec4899',
-          '#06b6d4'
+          '#2563eb',
+          '#0284c7',
+          '#0d9488',
+          '#16a34a',
+          '#d97706',
+          '#7c3aed'
         ],
         borderRadius: 4
       }
@@ -194,45 +199,46 @@ export default function TrafficAnalyticsView() {
   const mapBounds = densityData?.densityRanking?.filter(c => c.coordinates).map(c => [c.coordinates.lat, c.coordinates.lng]) || [];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {/* Top Filter and Controls Header */}
       <div style={{
-        backgroundColor: 'var(--bg-secondary)',
-        border: '1px solid var(--border-subtle)',
+        backgroundColor: '#ffffff',
+        border: '1px solid #e2e8f0',
         borderRadius: '10px',
-        padding: '16px 20px',
+        padding: '14px 20px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '14px'
+        gap: '14px',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '40px',
-            height: '40px',
+            width: '36px',
+            height: '36px',
             borderRadius: '8px',
-            backgroundColor: 'rgba(6, 182, 212, 0.12)',
+            backgroundColor: '#eff6ff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--accent-cyan)'
+            color: '#2563eb'
           }}>
-            <TrendingUp size={22} />
+            <TrendingUp size={20} />
           </div>
           <div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-main)' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a' }}>
               City-Wide Traffic Analytics & Flow Intelligence
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '12px', color: '#64748b' }}>
               Empirical density heatmaps, bottleneck delays, corridor speeds, and O-D travel patterns
             </div>
           </div>
         </div>
 
         {/* Time Filter Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>TIMEFRAME:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>TIMEFRAME:</span>
           {[
             { id: 'TODAY', label: 'Today' },
             { id: '24H', label: 'Last 24 Hours' },
@@ -243,14 +249,15 @@ export default function TrafficAnalyticsView() {
               key={f.id}
               onClick={() => setTimeFilter(f.id)}
               style={{
-                backgroundColor: timeFilter === f.id ? 'var(--accent-blue)' : 'var(--bg-card)',
-                color: timeFilter === f.id ? '#ffffff' : 'var(--text-muted)',
-                border: `1px solid ${timeFilter === f.id ? 'var(--accent-blue)' : 'var(--border-subtle)'}`,
-                padding: '6px 12px',
+                backgroundColor: timeFilter === f.id ? '#eff6ff' : '#ffffff',
+                color: timeFilter === f.id ? '#2563eb' : '#475569',
+                border: `1px solid ${timeFilter === f.id ? '#bfdbfe' : '#e2e8f0'}`,
+                padding: '5px 12px',
                 borderRadius: '6px',
                 fontSize: '11px',
                 fontWeight: 600,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
               }}
             >
               {f.label}
@@ -263,37 +270,38 @@ export default function TrafficAnalyticsView() {
       <div style={{
         position: 'relative',
         height: '480px',
-        backgroundColor: '#0a0f1d',
-        borderRadius: '12px',
-        border: '1px solid var(--border-subtle)',
+        backgroundColor: '#ffffff',
+        borderRadius: '10px',
+        border: '1px solid #e2e8f0',
         overflow: 'hidden',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)'
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
       }}>
         {/* Layer Controls Bar */}
         <div style={{
           position: 'absolute',
-          top: '14px',
-          right: '14px',
+          top: '12px',
+          right: '12px',
           zIndex: 1000,
-          backgroundColor: 'rgba(15, 23, 42, 0.88)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid var(--border-subtle)',
-          borderRadius: '8px',
-          padding: '8px 14px',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid #e2e8f0',
+          borderRadius: '6px',
+          padding: '6px 14px',
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          fontSize: '11px'
+          fontSize: '11px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+          color: '#0f172a'
         }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: 'var(--text-main)' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
             <input type="checkbox" checked={showHeatCircles} onChange={e => setShowHeatCircles(e.target.checked)} />
             Density Heatmaps
           </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: 'var(--text-main)' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
             <input type="checkbox" checked={showFlowLines} onChange={e => setShowFlowLines(e.target.checked)} />
             Corridor Flow Lines
           </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: 'var(--text-main)' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
             <input type="checkbox" checked={showCongestionAlerts} onChange={e => setShowCongestionAlerts(e.target.checked)} />
             Congestion Zones
           </label>
@@ -305,32 +313,32 @@ export default function TrafficAnalyticsView() {
           bottom: '16px',
           left: '16px',
           zIndex: 1000,
-          backgroundColor: 'rgba(15, 23, 42, 0.88)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid var(--border-subtle)',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid #e2e8f0',
           borderRadius: '8px',
           padding: '10px 14px',
           fontSize: '11px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '6px'
+          gap: '5px',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
         }}>
-          <div style={{ fontWeight: 700, color: '#f8fafc', fontSize: '11px' }}>FLOW DENSITY SCALE</div>
+          <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '11px' }}>FLOW DENSITY SCALE</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '12px', height: '4px', backgroundColor: '#10b981', borderRadius: '2px' }} />
-            <span style={{ color: 'var(--text-muted)' }}>Free Flow (&gt;35 km/h)</span>
+            <span style={{ width: '12px', height: '4px', backgroundColor: '#16a34a', borderRadius: '2px' }} />
+            <span style={{ color: '#475569' }}>Free Flow (&gt;35 km/h)</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '12px', height: '4px', backgroundColor: '#f59e0b', borderRadius: '2px' }} />
-            <span style={{ color: 'var(--text-muted)' }}>Moderate Transit (20-35 km/h)</span>
+            <span style={{ width: '12px', height: '4px', backgroundColor: '#d97706', borderRadius: '2px' }} />
+            <span style={{ color: '#475569' }}>Moderate Transit (20-35 km/h)</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '12px', height: '4px', backgroundColor: '#ef4444', borderRadius: '2px' }} />
-            <span style={{ color: 'var(--text-muted)' }}>Congested / Bottleneck (&lt;20 km/h)</span>
+            <span style={{ width: '12px', height: '4px', backgroundColor: '#dc2626', borderRadius: '2px' }} />
+            <span style={{ color: '#475569' }}>Congested / Bottleneck (&lt;20 km/h)</span>
           </div>
         </div>
 
-        {/* Leaflet Map */}
+        {/* Leaflet Map with Light Tiles */}
         <MapContainer
           center={defaultCenter}
           zoom={13}
@@ -338,8 +346,9 @@ export default function TrafficAnalyticsView() {
           zoomControl={false}
         >
           <TileLayer
-            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            maxZoom={19}
           />
 
           <MapAutoFit bounds={mapBounds} />
@@ -347,8 +356,8 @@ export default function TrafficAnalyticsView() {
           {/* 1. Traffic Density Heat Circles */}
           {showHeatCircles && densityData?.densityRanking?.map(cam => {
             if (!cam.coordinates) return null;
-            const radius = Math.max(20, Math.min(65, (cam.detectionCount || 1) * 8));
-            const color = cam.densityLevel === 'CONGESTED' ? '#ef4444' : cam.densityLevel === 'HIGH' ? '#f59e0b' : '#10b981';
+            const radius = Math.max(18, Math.min(60, (cam.detectionCount || 1) * 7));
+            const color = cam.densityLevel === 'CONGESTED' ? '#dc2626' : cam.densityLevel === 'HIGH' ? '#d97706' : '#16a34a';
 
             return (
               <CircleMarker
@@ -358,15 +367,15 @@ export default function TrafficAnalyticsView() {
                 pathOptions={{
                   color,
                   fillColor: color,
-                  fillOpacity: 0.25,
+                  fillOpacity: 0.20,
                   weight: 1.5
                 }}
               >
                 <Popup>
                   <div style={{ padding: '4px' }}>
-                    <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 600 }}>JUNCTION DENSITY</div>
-                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>{cam.cameraName}</div>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', marginTop: '4px' }}>
+                    <div style={{ fontSize: '10px', color: '#64748b', fontWeight: 600 }}>JUNCTION DENSITY</div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#0f172a' }}>{cam.cameraName}</div>
+                    <div style={{ fontSize: '11px', color: '#2563eb', marginTop: '4px' }}>
                       Volume: <strong>{cam.detectionCount} sightings</strong>
                     </div>
                     <div style={{ fontSize: '11px', color: color, fontWeight: 700, marginTop: '2px' }}>
@@ -385,8 +394,8 @@ export default function TrafficAnalyticsView() {
               [seg.fromCoordinates.lat, seg.fromCoordinates.lng],
               [seg.toCoordinates.lat, seg.toCoordinates.lng]
             ];
-            const color = seg.averageSpeedKmh < 20 ? '#ef4444' : seg.averageSpeedKmh < 35 ? '#f59e0b' : '#38bdf8';
-            const weight = Math.min(8, Math.max(3, seg.vehicleCount * 1.8));
+            const color = seg.averageSpeedKmh < 20 ? '#dc2626' : seg.averageSpeedKmh < 35 ? '#d97706' : '#2563eb';
+            const weight = Math.min(7, Math.max(3, seg.vehicleCount * 1.6));
 
             return (
               <Polyline
@@ -396,14 +405,14 @@ export default function TrafficAnalyticsView() {
               >
                 <Popup>
                   <div style={{ padding: '4px' }}>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 700 }}>ROAD CORRIDOR</div>
-                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>
+                    <div style={{ fontSize: '10px', color: '#2563eb', fontWeight: 700 }}>ROAD CORRIDOR</div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#0f172a' }}>
                       {seg.fromCameraName} → {seg.toCameraName}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#cbd5e1', marginTop: '4px' }}>
+                    <div style={{ fontSize: '11px', color: '#475569', marginTop: '4px' }}>
                       Distance: <strong>{seg.distanceMeters}m</strong> | Speed: <strong style={{ color }}>{seg.averageSpeedKmh} km/h</strong>
                     </div>
-                    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>
+                    <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
                       Vehicle Count: {seg.vehicleCount} | Est. Travel Time: {seg.averageTravelTimeSeconds}s
                     </div>
                   </div>
@@ -419,13 +428,13 @@ export default function TrafficAnalyticsView() {
               <CircleMarker
                 key={`congest-${j.cameraId}`}
                 center={[j.coordinates.lat, j.coordinates.lng]}
-                radius={50}
+                radius={45}
                 pathOptions={{
-                  color: '#ef4444',
-                  fillColor: '#ef4444',
-                  fillOpacity: 0.35,
-                  weight: 2,
-                  dashArray: '6, 6'
+                  color: '#dc2626',
+                  fillColor: '#dc2626',
+                  fillOpacity: 0.25,
+                  weight: 1.5,
+                  dashArray: '5, 5'
                 }}
               />
             );
@@ -434,24 +443,25 @@ export default function TrafficAnalyticsView() {
       </div>
 
       {/* Grid of 4 Data Visualization Panels Below the Map */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '16px' }}>
         
         {/* Panel 1: Hourly Traffic Trends Histogram */}
         <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #e2e8f0',
           borderRadius: '10px',
-          padding: '20px',
+          padding: '18px',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Clock size={16} color="var(--accent-cyan)" />
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Clock size={16} color="#2563eb" />
                 24-Hour Traffic Trend Histogram
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#64748b' }}>
                 Temporal distribution of plate detections across the city
               </div>
             </div>
@@ -459,11 +469,11 @@ export default function TrafficAnalyticsView() {
               <span style={{
                 fontSize: '11px',
                 fontWeight: 600,
-                padding: '3px 8px',
+                padding: '2px 8px',
                 borderRadius: '4px',
-                backgroundColor: 'rgba(6, 182, 212, 0.12)',
-                color: 'var(--accent-cyan)',
-                border: '1px solid rgba(6, 182, 212, 0.3)'
+                backgroundColor: '#eff6ff',
+                color: '#2563eb',
+                border: '1px solid #bfdbfe'
               }}>
                 Peak: {trafficSummary.peakTrafficHour}
               </span>
@@ -471,65 +481,68 @@ export default function TrafficAnalyticsView() {
           </div>
 
           <div style={{ height: '220px', width: '100%' }}>
-            <Line data={hourlyChartData} options={hourlyChartOptions} />
+            <Line data={hourlyChartData} options={lightChartOptions} />
           </div>
         </div>
 
         {/* Panel 2: Camera Volume Comparison */}
         <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #e2e8f0',
           borderRadius: '10px',
-          padding: '20px',
+          padding: '18px',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Camera size={16} color="#38bdf8" />
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Camera size={16} color="#0284c7" />
                 Terminal Volume Comparison
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#64748b' }}>
                 Detection load distribution by surveillance terminal
               </div>
             </div>
-            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>
               {densityData?.totalCamerasEvaluated || 0} Nodes
             </span>
           </div>
 
           <div style={{ height: '220px', width: '100%' }}>
-            <Bar data={cameraComparisonData} options={hourlyChartOptions} />
+            <Bar data={cameraComparisonData} options={lightChartOptions} />
           </div>
         </div>
 
         {/* Panel 3: Speed Distribution & Violation Analysis */}
         <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #e2e8f0',
           borderRadius: '10px',
-          padding: '20px',
+          padding: '18px',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Gauge size={16} color="var(--accent-emerald)" />
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Gauge size={16} color="#16a34a" />
                 Corridor Speed & Violation Analysis
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#64748b' }}>
                 Calculated transit velocities vs urban speed limit (60 km/h)
               </div>
             </div>
             <span style={{
               fontSize: '11px',
               fontWeight: 700,
-              padding: '3px 8px',
+              padding: '2px 8px',
               borderRadius: '4px',
-              backgroundColor: 'rgba(16, 185, 129, 0.12)',
-              color: '#34d399'
+              backgroundColor: '#f0fdf4',
+              color: '#16a34a',
+              border: '1px solid #bbf7d0'
             }}>
               Avg {speedData?.overallAverageSpeedKmh || 0} km/h
             </span>
@@ -537,7 +550,7 @@ export default function TrafficAnalyticsView() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto', maxHeight: '220px' }}>
             {speedData?.corridorSpeeds?.length === 0 ? (
-              <div style={{ fontSize: '12px', color: 'var(--text-faint)', textAlign: 'center', padding: '30px' }}>
+              <div style={{ fontSize: '12px', color: '#94a3b8', textAlign: 'center', padding: '30px' }}>
                 Insufficient data for corridor speed distribution.
               </div>
             ) : (
@@ -545,32 +558,33 @@ export default function TrafficAnalyticsView() {
                 <div
                   key={i}
                   style={{
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e2e8f0',
                     borderRadius: '6px',
                     padding: '10px 12px',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)'
                   }}
                 >
                   <div>
-                    <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)' }}>{c.name}</div>
-                    <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a' }}>{c.name}</div>
+                    <div style={{ fontSize: '10px', color: '#64748b', marginTop: '2px' }}>
                       Distance: {c.transitDistanceMeters}m | Avg Duration: {c.travelTimeSeconds}s
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{
                       fontSize: '13px',
-                      fontWeight: 800,
+                      fontWeight: 700,
                       fontFamily: 'var(--font-mono)',
-                      color: c.averageSpeedKmh > 60 ? '#f87171' : 'var(--accent-emerald)'
+                      color: c.averageSpeedKmh > 60 ? '#dc2626' : '#16a34a'
                     }}>
                       {c.averageSpeedKmh} km/h
                     </div>
                     {c.averageSpeedKmh > 60 && (
-                      <div style={{ fontSize: '9px', fontWeight: 700, color: '#f87171' }}>SPEED VIOLATION</div>
+                      <div style={{ fontSize: '9px', fontWeight: 700, color: '#dc2626' }}>SPEED VIOLATION</div>
                     )}
                   </div>
                 </div>
@@ -579,33 +593,34 @@ export default function TrafficAnalyticsView() {
           </div>
         </div>
 
-        {/* Panel 4: Origin-Destination Matrix & Congestion Bottlenecks */}
+        {/* Panel 4: Origin-Destination Matrix */}
         <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #e2e8f0',
           borderRadius: '10px',
-          padding: '20px',
+          padding: '18px',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
             <div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Compass size={16} color="#818cf8" />
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Compass size={16} color="#7c3aed" />
                 Origin-Destination (O-D) Transit Pairs
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#64748b' }}>
                 Empirical trip origins and destinations with average trip duration
               </div>
             </div>
-            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>
               {odData?.totalODTripsAnalyzed || 0} Trips
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto', maxHeight: '220px' }}>
             {(!odData?.odPairs || odData.odPairs.length === 0) ? (
-              <div style={{ fontSize: '12px', color: 'var(--text-faint)', textAlign: 'center', padding: '30px' }}>
+              <div style={{ fontSize: '12px', color: '#94a3b8', textAlign: 'center', padding: '30px' }}>
                 {odData?.message || 'Insufficient data for O-D analysis.'}
               </div>
             ) : (
@@ -613,30 +628,31 @@ export default function TrafficAnalyticsView() {
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e2e8f0',
                     borderRadius: '6px',
                     padding: '10px 12px',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)' }}>
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a' }}>
                       {pair.originName}
                     </span>
-                    <ArrowRight size={13} color="var(--accent-cyan)" />
-                    <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)' }}>
+                    <ArrowRight size={13} color="#2563eb" />
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a' }}>
                       {pair.destinationName}
                     </span>
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#38bdf8' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#2563eb' }}>
                       {pair.tripCount} {pair.tripCount === 1 ? 'Trip' : 'Trips'}
                     </div>
-                    <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
+                    <div style={{ fontSize: '10px', color: '#64748b' }}>
                       Avg {pair.averageTripDurationMinutes}m ({pair.distanceMeters}m)
                     </div>
                   </div>

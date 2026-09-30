@@ -11,11 +11,11 @@
       "status": "ACTIVE",
       "feedType": "SIMULATED",
       "direction": "NORTHBOUND",
-      "detectionCount": 25,
+      "detectionCount": 28,
       "_id": "cam_z3nblx56c",
       "createdAt": "2026-09-30T17:26:52.192Z",
-      "updatedAt": "2026-09-30T17:55:54.769Z",
-      "lastSeen": "2026-09-30T17:55:54.769Z"
+      "updatedAt": "2026-09-30T18:17:34.253Z",
+      "lastSeen": "2026-09-30T18:17:34.253Z"
     },
     {
       "cameraId": "CAM-IND-02",
@@ -683,6 +683,123 @@
         "resolvedAt": "2026-09-30T17:55:54.772Z",
         "resolvedBy": "System Verifier"
       }
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T18:07:52.376Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790791672377_00iat",
+      "createdAt": "2026-09-30T18:07:52.377Z",
+      "updatedAt": "2026-09-30T18:07:52.377Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "HIGH",
+        "plateNumber": "KA05MJ4444",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+        "detectionId": "det_1790791672377_00iat",
+        "timestamp": "2026-09-30T18:07:52.376Z",
+        "_id": "alt_1790791672377_z4gas",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T18:07:52.377Z",
+        "resolvedAt": "2026-09-30T18:07:52.383Z",
+        "resolvedBy": "System Verifier"
+      }
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T18:12:45.105Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790791965119_4qalv",
+      "createdAt": "2026-09-30T18:12:45.119Z",
+      "updatedAt": "2026-09-30T18:12:45.119Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "HIGH",
+        "plateNumber": "KA05MJ4444",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+        "detectionId": "det_1790791965119_4qalv",
+        "timestamp": "2026-09-30T18:12:45.105Z",
+        "_id": "alt_1790791965121_ximma",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T18:12:45.121Z",
+        "resolvedAt": "2026-09-30T18:12:45.134Z",
+        "resolvedBy": "System Verifier"
+      }
+    },
+    {
+      "plateNumber": "KA05MJ4444",
+      "confidence": 0.97,
+      "cameraId": "CAM-IND-01",
+      "timestamp": "2026-09-30T18:17:34.247Z",
+      "imagePath": "",
+      "bbox": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "vehicleType": "CAR",
+      "metadata": {},
+      "_id": "det_1790792254253_feor3",
+      "createdAt": "2026-09-30T18:17:34.253Z",
+      "updatedAt": "2026-09-30T18:17:34.253Z",
+      "alertTriggered": {
+        "type": "BLACKLIST_MATCH",
+        "severity": "HIGH",
+        "plateNumber": "KA05MJ4444",
+        "cameraId": "CAM-IND-01",
+        "location": "Sector 14 - MG Road Intersect",
+        "coordinates": {
+          "lat": 28.4735,
+          "lng": 77.0812
+        },
+        "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+        "detectionId": "det_1790792254253_feor3",
+        "timestamp": "2026-09-30T18:17:34.247Z",
+        "_id": "alt_1790792254254_d835p",
+        "status": "RESOLVED",
+        "createdAt": "2026-09-30T18:17:34.254Z",
+        "resolvedAt": "2026-09-30T18:17:34.264Z",
+        "resolvedBy": "System Verifier"
+      }
     }
   ],
   "vehicles": [
@@ -765,8 +882,8 @@
       "makeModel": "UNKNOWN",
       "color": "UNKNOWN",
       "firstSeen": "2026-09-30T17:55:22.511Z",
-      "lastSeen": "2026-09-30T17:55:54.769Z",
-      "totalDetections": 2,
+      "lastSeen": "2026-09-30T18:17:34.254Z",
+      "totalDetections": 5,
       "isBlacklisted": false,
       "flagReason": ""
     }
@@ -1071,6 +1188,51 @@
       "detectionId": "det_1790790954769_gq587",
       "_id": "traj_1790790954769_xfzry",
       "createdAt": "2026-09-30T17:55:54.769Z"
+    },
+    {
+      "vehiclePlate": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T18:07:52.376Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790791672377_00iat",
+      "_id": "traj_1790791672377_fgbo5",
+      "createdAt": "2026-09-30T18:07:52.377Z"
+    },
+    {
+      "vehiclePlate": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T18:12:45.105Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790791965119_4qalv",
+      "_id": "traj_1790791965121_dr8y2",
+      "createdAt": "2026-09-30T18:12:45.121Z"
+    },
+    {
+      "vehiclePlate": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "cameraName": "MG Road Junction Terminal",
+      "timestamp": "2026-09-30T18:17:34.247Z",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "direction": "NORTHBOUND",
+      "speed": null,
+      "detectionId": "det_1790792254253_feor3",
+      "_id": "traj_1790792254254_7vjws",
+      "createdAt": "2026-09-30T18:17:34.254Z"
     }
   ],
   "blacklist": [
@@ -1094,7 +1256,7 @@
       "_id": "blk_1790790661661",
       "isActive": true,
       "createdAt": "2026-09-30T17:51:01.661Z",
-      "updatedAt": "2026-09-30T17:52:02.859Z"
+      "updatedAt": "2026-09-30T18:19:29.720Z"
     },
     {
       "plateNumber": "KA05MJ4444",
@@ -1105,7 +1267,7 @@
       "_id": "blk_1790790922494",
       "isActive": true,
       "createdAt": "2026-09-30T17:55:22.494Z",
-      "updatedAt": "2026-09-30T17:55:54.763Z"
+      "updatedAt": "2026-09-30T18:17:34.244Z"
     }
   ],
   "alerts": [
@@ -1248,6 +1410,63 @@
       "status": "RESOLVED",
       "createdAt": "2026-09-30T17:55:54.769Z",
       "resolvedAt": "2026-09-30T17:55:54.772Z",
+      "resolvedBy": "System Verifier"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "HIGH",
+      "plateNumber": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+      "detectionId": "det_1790791672377_00iat",
+      "timestamp": "2026-09-30T18:07:52.376Z",
+      "_id": "alt_1790791672377_z4gas",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T18:07:52.377Z",
+      "resolvedAt": "2026-09-30T18:07:52.383Z",
+      "resolvedBy": "System Verifier"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "HIGH",
+      "plateNumber": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+      "detectionId": "det_1790791965119_4qalv",
+      "timestamp": "2026-09-30T18:12:45.105Z",
+      "_id": "alt_1790791965121_ximma",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T18:12:45.121Z",
+      "resolvedAt": "2026-09-30T18:12:45.134Z",
+      "resolvedBy": "System Verifier"
+    },
+    {
+      "type": "BLACKLIST_MATCH",
+      "severity": "HIGH",
+      "plateNumber": "KA05MJ4444",
+      "cameraId": "CAM-IND-01",
+      "location": "Sector 14 - MG Road Intersect",
+      "coordinates": {
+        "lat": 28.4735,
+        "lng": 77.0812
+      },
+      "message": "ALERT: Blacklisted vehicle KA05MJ4444 spotted at MG Road Junction Terminal. Reason: Flagged for transit violation",
+      "detectionId": "det_1790792254253_feor3",
+      "timestamp": "2026-09-30T18:17:34.247Z",
+      "_id": "alt_1790792254254_d835p",
+      "status": "RESOLVED",
+      "createdAt": "2026-09-30T18:17:34.254Z",
+      "resolvedAt": "2026-09-30T18:17:34.264Z",
       "resolvedBy": "System Verifier"
     }
   ],

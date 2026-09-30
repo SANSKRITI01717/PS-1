@@ -308,18 +308,22 @@ export default function CameraManager({ socket, onCameraSelected }) {
         backgroundColor: 'var(--bg-secondary)',
         border: '1px solid var(--border-subtle)',
         borderRadius: '10px',
-        padding: '16px 20px'
+        padding: '16px 20px',
+        boxShadow: 'var(--shadow-sm)',
+        flexWrap: 'wrap',
+        gap: '14px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div style={{
             width: '42px',
             height: '42px',
             borderRadius: '8px',
-            backgroundColor: 'rgba(6, 182, 212, 0.12)',
+            backgroundColor: '#eff6ff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--accent-cyan)'
+            color: 'var(--accent-blue)',
+            border: '1px solid #bfdbfe'
           }}>
             <Camera size={22} />
           </div>
@@ -333,9 +337,9 @@ export default function CameraManager({ socket, onCameraSelected }) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           {/* Status Filter */}
-          <div style={{ display: 'flex', backgroundColor: 'var(--bg-primary)', borderRadius: '6px', padding: '3px', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'flex', backgroundColor: '#f1f5f9', borderRadius: '6px', padding: '3px', border: '1px solid var(--border-subtle)' }}>
             {['ALL', 'ACTIVE', 'MAINTENANCE', 'INACTIVE'].map(status => (
               <button
                 key={status}
@@ -349,7 +353,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
                   fontSize: '11px',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.15s ease'
                 }}
               >
                 {status}
@@ -363,15 +367,16 @@ export default function CameraManager({ socket, onCameraSelected }) {
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              backgroundColor: 'var(--accent-emerald)',
+              backgroundColor: 'var(--accent-blue)',
               color: '#ffffff',
               border: 'none',
-              padding: '8px 14px',
+              padding: '8px 16px',
               borderRadius: '6px',
               fontSize: '12px',
               fontWeight: 600,
               cursor: 'pointer',
-              boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)'
+              boxShadow: '0 1px 3px rgba(37, 99, 235, 0.3)',
+              transition: 'background-color 0.15s ease'
             }}
           >
             <Plus size={16} /> Add Camera
@@ -391,15 +396,16 @@ export default function CameraManager({ socket, onCameraSelected }) {
           flexDirection: 'column',
           gap: '12px',
           maxHeight: '740px',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          boxShadow: 'var(--shadow-sm)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-main)', letterSpacing: '0.02em' }}>
               SURVEILLANCE TERMINALS ({filteredCameras.length})
             </span>
             <button 
               onClick={fetchCameras} 
-              style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px' }}
+              style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 600 }}
             >
               <RefreshCw size={13} /> Sync
             </button>
@@ -407,6 +413,9 @@ export default function CameraManager({ socket, onCameraSelected }) {
 
           {filteredCameras.map(cam => {
             const isSelected = selectedCamera?.cameraId === cam.cameraId;
+            const statusColor = cam.isStreaming ? '#0284c7' : (cam.status === 'ACTIVE' ? '#16a34a' : (cam.status === 'MAINTENANCE' ? '#d97706' : '#dc2626'));
+            const statusBg = cam.isStreaming ? '#e0f2fe' : (cam.status === 'ACTIVE' ? '#dcfce7' : (cam.status === 'MAINTENANCE' ? '#fef3c7' : '#fee2e2'));
+
             return (
               <div
                 key={cam.cameraId}
@@ -415,13 +424,14 @@ export default function CameraManager({ socket, onCameraSelected }) {
                   if (onCameraSelected) onCameraSelected(cam);
                 }}
                 style={{
-                  backgroundColor: isSelected ? 'var(--bg-card-hover)' : 'var(--bg-card)',
-                  border: `1px solid ${isSelected ? 'var(--accent-cyan)' : 'var(--border-subtle)'}`,
+                  backgroundColor: isSelected ? '#f8faff' : '#ffffff',
+                  border: `1px solid ${isSelected ? '#93c5fd' : 'var(--border-subtle)'}`,
+                  borderLeft: `4px solid ${isSelected ? 'var(--accent-blue)' : '#cbd5e1'}`,
                   borderRadius: '8px',
                   padding: '14px',
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
-                  boxShadow: isSelected ? '0 0 12px rgba(6, 182, 212, 0.15)' : 'none'
+                  boxShadow: isSelected ? '0 2px 8px rgba(37, 99, 235, 0.08)' : '0 1px 2px rgba(0, 0, 0, 0.02)'
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
@@ -430,19 +440,19 @@ export default function CameraManager({ socket, onCameraSelected }) {
                       width: '8px',
                       height: '8px',
                       borderRadius: '50%',
-                      backgroundColor: cam.isStreaming ? 'var(--accent-cyan)' : (cam.status === 'ACTIVE' ? 'var(--accent-emerald)' : 'var(--accent-amber)'),
-                      boxShadow: cam.isStreaming ? '0 0 8px #06b6d4' : (cam.status === 'ACTIVE' ? '0 0 6px #10b981' : 'none')
+                      backgroundColor: statusColor
                     }} />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 700, color: 'var(--accent-blue)' }}>
                       {cam.cameraId}
                     </span>
                     <span style={{
                       fontSize: '10px',
-                      fontWeight: 600,
+                      fontWeight: 700,
                       padding: '2px 6px',
                       borderRadius: '4px',
-                      backgroundColor: 'rgba(255,255,255,0.06)',
-                      color: 'var(--text-muted)'
+                      backgroundColor: statusBg,
+                      color: statusColor,
+                      border: `1px solid ${statusColor}30`
                     }}>
                       {cam.feedType}
                     </span>
@@ -459,7 +469,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     <button
                       onClick={() => handleDeleteCamera(cam.cameraId)}
                       title="Decommission Camera"
-                      style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', padding: '2px' }}
+                      style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', padding: '2px' }}
                     >
                       <Trash2 size={15} />
                     </button>
@@ -471,7 +481,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '10px' }}>
-                  <MapPin size={12} color="var(--accent-cyan)" />
+                  <MapPin size={12} color="var(--accent-blue)" />
                   <span>{cam.location}</span>
                 </div>
 
@@ -480,14 +490,14 @@ export default function CameraManager({ socket, onCameraSelected }) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   paddingTop: '8px',
-                  borderTop: '1px solid rgba(255,255,255,0.04)',
+                  borderTop: '1px solid var(--border-subtle)',
                   fontSize: '11px',
-                  color: 'var(--text-faint)'
+                  color: 'var(--text-muted)'
                 }}>
                   <span style={{ fontFamily: 'var(--font-mono)' }}>
                     GPS: {cam.coordinates?.lat?.toFixed(4)}, {cam.coordinates?.lng?.toFixed(4)}
                   </span>
-                  <span style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>
+                  <span style={{ color: '#15803d', fontWeight: 700 }}>
                     {cam.detectionCount || 0} Detections
                   </span>
                 </div>
@@ -505,13 +515,14 @@ export default function CameraManager({ socket, onCameraSelected }) {
             padding: '20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px'
+            gap: '16px',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             {/* Monitor Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Radio size={16} color={selectedCamera.isStreaming ? 'var(--accent-cyan)' : 'var(--text-muted)'} />
+                  <Radio size={16} color={selectedCamera.isStreaming ? '#0284c7' : 'var(--text-muted)'} />
                   <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)' }}>
                     TERMINAL MONITOR: {selectedCamera.cameraId}
                   </span>
@@ -529,14 +540,15 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    backgroundColor: selectedCamera.isStreaming ? 'rgba(239, 68, 68, 0.15)' : 'rgba(6, 182, 212, 0.15)',
-                    color: selectedCamera.isStreaming ? '#ef4444' : 'var(--accent-cyan)',
-                    border: `1px solid ${selectedCamera.isStreaming ? '#ef4444' : 'var(--accent-cyan)'}`,
+                    backgroundColor: selectedCamera.isStreaming ? '#fee2e2' : '#eff6ff',
+                    color: selectedCamera.isStreaming ? '#b91c1c' : 'var(--accent-blue)',
+                    border: `1px solid ${selectedCamera.isStreaming ? '#fca5a5' : '#bfdbfe'}`,
                     padding: '6px 12px',
                     borderRadius: '6px',
                     fontSize: '12px',
                     fontWeight: 600,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                 >
                   {selectedCamera.isStreaming ? <><Square size={13} /> Stop Stream</> : <><Play size={13} /> Live Stream</>}
@@ -549,36 +561,37 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    backgroundColor: 'rgba(59, 130, 246, 0.15)',
-                    color: '#60a5fa',
-                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    backgroundColor: '#f0fdf4',
+                    color: '#15803d',
+                    border: '1px solid #bbf7d0',
                     padding: '6px 12px',
                     borderRadius: '6px',
                     fontSize: '12px',
                     fontWeight: 600,
-                    cursor: triggering ? 'wait' : 'pointer'
+                    cursor: triggering ? 'wait' : 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                 >
                   <Crosshair size={14} />
-                  {triggering ? 'Processing AI...' : 'Simulate Vehicle Pass'}
+                  {triggering ? 'Processing Frame...' : 'Simulate Vehicle Pass'}
                 </button>
               </div>
             </div>
 
-            {/* Simulated Live Viewport Screen */}
+            {/* Live Viewport Screen (Crisp Surveillance Monitor) */}
             <div style={{
               height: '320px',
-              backgroundColor: '#050811',
+              backgroundColor: '#0f172a',
               borderRadius: '8px',
-              border: '1px solid var(--border-subtle)',
+              border: '1px solid #334155',
               position: 'relative',
               overflow: 'hidden',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.8)'
+              boxShadow: 'inset 0 0 40px rgba(0, 0, 0, 0.6)'
             }}>
-              {/* High-Tech HUD Elements */}
+              {/* Surveillance HUD Overlay */}
               <div style={{
                 position: 'absolute',
                 top: '12px',
@@ -589,10 +602,11 @@ export default function CameraManager({ socket, onCameraSelected }) {
                 zIndex: 10,
                 fontSize: '11px',
                 fontFamily: 'var(--font-mono)',
-                backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                padding: '4px 8px',
+                backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                color: '#f8fafc',
+                padding: '4px 10px',
                 borderRadius: '4px',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
+                border: '1px solid rgba(255, 255, 255, 0.15)'
               }}>
                 <span style={{
                   width: '6px',
@@ -601,8 +615,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                   backgroundColor: selectedCamera.isStreaming ? '#ef4444' : '#10b981',
                   boxShadow: selectedCamera.isStreaming ? '0 0 6px #ef4444' : '0 0 4px #10b981'
                 }} />
-                <span>{selectedCamera.isStreaming ? 'LIVE INGESTION' : 'FEED STANDBY'}</span>
-                <span style={{ color: 'var(--text-faint)' }}>|</span>
+                <span style={{ fontWeight: 700 }}>{selectedCamera.isStreaming ? 'LIVE INGESTION' : 'FEED STANDBY'}</span>
+                <span style={{ color: '#64748b' }}>|</span>
                 <span>{selectedCamera.direction}</span>
               </div>
 
@@ -612,11 +626,11 @@ export default function CameraManager({ socket, onCameraSelected }) {
                 right: '14px',
                 fontSize: '11px',
                 fontFamily: 'var(--font-mono)',
-                color: 'var(--accent-cyan)',
-                backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                padding: '4px 8px',
+                color: '#38bdf8',
+                backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                padding: '4px 10px',
                 borderRadius: '4px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
                 zIndex: 10
               }}>
                 GPS: {selectedCamera.coordinates?.lat?.toFixed(4)}, {selectedCamera.coordinates?.lng?.toFixed(4)}
@@ -626,7 +640,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
               <div style={{
                 width: '90%',
                 height: '80%',
-                border: '1px dashed rgba(6, 182, 212, 0.25)',
+                border: '1px dashed rgba(56, 189, 248, 0.3)',
                 borderRadius: '6px',
                 display: 'flex',
                 flexDirection: 'column',
@@ -636,31 +650,30 @@ export default function CameraManager({ socket, onCameraSelected }) {
               }}>
                 {lastDetectionResult ? (
                   <div style={{
-                    backgroundColor: 'rgba(15, 23, 42, 0.85)',
-                    border: '1px solid var(--accent-cyan)',
-                    padding: '16px 24px',
+                    backgroundColor: '#ffffff',
+                    border: '2px solid #2563eb',
+                    padding: '16px 26px',
                     borderRadius: '8px',
                     textAlign: 'center',
-                    boxShadow: '0 0 20px rgba(6, 182, 212, 0.3)',
-                    animation: 'pulse 2s infinite'
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)'
                   }}>
-                    <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.08em', marginBottom: '4px' }}>
-                      AI Detection Locked (custom_trained_model.pt)
+                    <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, letterSpacing: '0.08em', marginBottom: '4px' }}>
+                      VEHICLE DETECTED
                     </div>
-                    <div style={{ fontSize: '24px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>
+                    <div style={{ fontSize: '26px', fontWeight: 800, color: '#0f172a', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>
                       {lastDetectionResult.plateNumber}
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '8px', fontSize: '11px', color: 'var(--text-muted)' }}>
-                      <span>Confidence: <strong style={{ color: 'var(--accent-emerald)' }}>{(lastDetectionResult.confidence * 100).toFixed(1)}%</strong></span>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '8px', fontSize: '11px', color: '#475569' }}>
+                      <span>Confidence: <strong style={{ color: '#15803d' }}>{(lastDetectionResult.confidence * 100).toFixed(1)}%</strong></span>
                       <span>Direction: <strong>{lastDetectionResult.direction}</strong></span>
                       <span>Vehicle: <strong>{lastDetectionResult.vehicleType || 'SEDAN'}</strong></span>
                     </div>
                   </div>
                 ) : (
-                  <div style={{ textAlign: 'center', color: 'var(--text-faint)' }}>
-                    <Video size={40} style={{ opacity: 0.3, marginBottom: '8px' }} />
-                    <div style={{ fontSize: '13px' }}>Awaiting Vehicle Feed Trigger</div>
-                    <div style={{ fontSize: '11px' }}>Click 'Simulate Vehicle Pass' or 'Live Stream' to engage AI engine</div>
+                  <div style={{ textAlign: 'center', color: '#94a3b8' }}>
+                    <Video size={40} style={{ opacity: 0.4, marginBottom: '8px' }} />
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#cbd5e1' }}>Feed Standby</div>
+                    <div style={{ fontSize: '11px', color: '#94a3b8' }}>Click 'Live Stream' or 'Simulate Vehicle Pass' to activate monitoring</div>
                   </div>
                 )}
               </div>
@@ -675,10 +688,10 @@ export default function CameraManager({ socket, onCameraSelected }) {
                 justifyContent: 'space-between',
                 fontSize: '11px',
                 fontFamily: 'var(--font-mono)',
-                color: 'var(--text-faint)'
+                color: '#94a3b8'
               }}>
                 <span>FPS: 25.0 | RES: 1920x1080</span>
-                <span>ENGINE: YOLO-PLATE + OCR-CCT-XS</span>
+                <span>OPTICAL FEED: ACTIVE</span>
               </div>
             </div>
 
@@ -687,29 +700,31 @@ export default function CameraManager({ socket, onCameraSelected }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              backgroundColor: 'var(--bg-card)',
+              backgroundColor: '#ffffff',
               border: '1px solid var(--border-subtle)',
               borderRadius: '8px',
-              padding: '12px 16px'
+              padding: '12px 16px',
+              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Upload size={18} color="var(--accent-blue)" />
                 <div>
-                  <div style={{ fontSize: '13px', fontWeight: 600 }}>Direct Frame / Video Ingestion</div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Test camera accuracy using custom video or image file</div>
+                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-main)' }}>Direct Frame Ingestion</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Upload custom video or image for terminal recognition</div>
                 </div>
               </div>
 
               <label style={{
-                backgroundColor: 'var(--bg-card-hover)',
-                border: '1px solid var(--border-subtle)',
+                backgroundColor: '#ffffff',
+                border: '1px solid #cbd5e1',
                 color: 'var(--text-main)',
                 padding: '6px 14px',
                 borderRadius: '6px',
                 fontSize: '12px',
                 fontWeight: 600,
                 cursor: uploading ? 'wait' : 'pointer',
-                display: 'inline-block'
+                display: 'inline-block',
+                transition: 'border-color 0.15s ease'
               }}>
                 {uploading ? 'Processing File...' : 'Select File'}
                 <input
@@ -724,12 +739,12 @@ export default function CameraManager({ socket, onCameraSelected }) {
 
             {/* Camera Detection Event Timeline */}
             <div>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '8px' }}>
+              <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '8px' }}>
                 REAL-TIME SIGHTING TIMELINE FOR {selectedCamera.cameraId}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {recentCameraDetections.length === 0 ? (
-                  <div style={{ fontSize: '12px', color: 'var(--text-faint)', padding: '12px', textAlign: 'center', backgroundColor: 'var(--bg-card)', borderRadius: '6px' }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', padding: '12px', textAlign: 'center', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid var(--border-subtle)' }}>
                     No detections recorded yet for this camera.
                   </div>
                 ) : (
@@ -740,22 +755,23 @@ export default function CameraManager({ socket, onCameraSelected }) {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        backgroundColor: 'var(--bg-card)',
+                        backgroundColor: '#ffffff',
                         border: '1px solid var(--border-subtle)',
                         borderRadius: '6px',
                         padding: '8px 12px',
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)'
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#38bdf8' }}>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--accent-blue)' }}>
                           {det.plateNumber}
                         </span>
-                        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                        <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 600 }}>
                           {(det.confidence * 100).toFixed(1)}% conf
                         </span>
                       </div>
-                      <div style={{ color: 'var(--text-faint)', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
+                      <div style={{ color: 'var(--text-muted)', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
                         {new Date(det.timestamp).toLocaleTimeString()}
                       </div>
                     </div>
@@ -773,7 +789,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'var(--text-muted)',
-            padding: '40px'
+            padding: '40px',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             Select a camera terminal from the list to view its live feed and monitoring controls.
           </div>
@@ -788,28 +805,29 @@ export default function CameraManager({ socket, onCameraSelected }) {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          backgroundColor: 'rgba(15, 23, 42, 0.5)',
+          backdropFilter: 'blur(2px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 100
         }}>
           <div style={{
-            backgroundColor: 'var(--bg-card)',
+            backgroundColor: '#ffffff',
             border: '1px solid var(--border-subtle)',
             borderRadius: '12px',
             width: '460px',
             maxWidth: '90%',
             padding: '24px',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)'
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)'
           }}>
-            <div style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px' }}>
+            <div style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px', color: 'var(--text-main)' }}>
               {modalMode === 'CREATE' ? 'Register New Camera Terminal' : `Edit Camera: ${formData.cameraId}`}
             </div>
 
-            <form onSubmit={handleSaveCamera} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <form onSubmit={handleSaveCamera} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
-                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Camera ID</label>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Camera ID</label>
                 <input
                   type="text"
                   required
@@ -820,8 +838,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: modalMode === 'EDIT' ? '#f1f5f9' : '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-main)',
                     fontSize: '13px'
                   }}
@@ -829,7 +847,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
               </div>
 
               <div>
-                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Camera Name</label>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Camera Name</label>
                 <input
                   type="text"
                   required
@@ -840,8 +858,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-main)',
                     fontSize: '13px'
                   }}
@@ -849,7 +867,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
               </div>
 
               <div>
-                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Location / Sector Description</label>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Location / Sector Description</label>
                 <input
                   type="text"
                   required
@@ -860,8 +878,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-main)',
                     fontSize: '13px'
                   }}
@@ -870,7 +888,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Latitude</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Latitude</label>
                   <input
                     type="number"
                     step="any"
@@ -881,15 +899,15 @@ export default function CameraManager({ socket, onCameraSelected }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
                   />
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Longitude</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Longitude</label>
                   <input
                     type="number"
                     step="any"
@@ -900,8 +918,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
@@ -911,7 +929,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Traffic Direction</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Traffic Direction</label>
                   <select
                     value={formData.direction}
                     onChange={e => setFormData({ ...formData, direction: e.target.value })}
@@ -919,8 +937,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
@@ -932,7 +950,7 @@ export default function CameraManager({ socket, onCameraSelected }) {
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Status</label>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)', display: 'block', marginBottom: '4px' }}>Status</label>
                   <select
                     value={formData.status}
                     onChange={e => setFormData({ ...formData, status: e.target.value })}
@@ -940,8 +958,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: '6px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
                       color: 'var(--text-main)',
                       fontSize: '13px'
                     }}
@@ -953,13 +971,13 @@ export default function CameraManager({ socket, onCameraSelected }) {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
                   style={{
-                    backgroundColor: 'transparent',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     color: 'var(--text-muted)',
                     padding: '8px 16px',
                     borderRadius: '6px',
@@ -980,7 +998,8 @@ export default function CameraManager({ socket, onCameraSelected }) {
                     borderRadius: '6px',
                     fontSize: '12px',
                     fontWeight: 600,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(37, 99, 235, 0.3)'
                   }}
                 >
                   {modalMode === 'CREATE' ? 'Register Terminal' : 'Save Changes'}

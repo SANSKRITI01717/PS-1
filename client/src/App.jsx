@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ShieldCheck, 
-  Activity, 
-  Cpu, 
-  Database, 
   Radio, 
-  Video, 
-  MapPin, 
   AlertTriangle,
-  Server,
-  Layers,
-  CheckCircle2,
   Camera,
   Navigation,
   TrendingUp,
@@ -78,64 +69,69 @@ export default function App() {
     };
   }, []);
 
-  const getTabStyle = (tabId, accentColor = 'var(--accent-cyan)') => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    backgroundColor: activeTab === tabId ? 'rgba(20, 30, 51, 0.95)' : 'transparent',
-    color: activeTab === tabId ? accentColor : 'var(--text-muted)',
-    border: `1px solid ${activeTab === tabId ? accentColor : 'transparent'}`,
-    boxShadow: activeTab === tabId ? `0 0 14px ${accentColor}33` : 'none',
-    borderRadius: '6px',
-    padding: '7px 14px',
-    fontSize: '12px',
-    fontWeight: activeTab === tabId ? 700 : 500,
-    cursor: 'pointer',
-    transition: 'all 0.15s ease-in-out'
-  });
+  const getTabStyle = (tabId) => {
+    const isActive = activeTab === tabId;
+    return {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      backgroundColor: isActive ? '#eff6ff' : 'transparent',
+      color: isActive ? '#1d4ed8' : '#475569',
+      border: `1px solid ${isActive ? '#bfdbfe' : 'transparent'}`,
+      boxShadow: isActive ? '0 1px 2px rgba(37, 99, 235, 0.08)' : 'none',
+      borderRadius: '6px',
+      padding: '6px 11px',
+      fontSize: '12px',
+      fontWeight: isActive ? 600 : 500,
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
+      transition: 'all 0.15s ease'
+    };
+  };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-primary)' }}>
       {/* Floating Real-Time Alert Toast */}
       {toastAlert && (
         <div className="animate-slide-in" style={{
           position: 'fixed',
-          top: '76px',
-          right: '24px',
+          top: '68px',
+          right: '20px',
           zIndex: 1000,
-          backgroundColor: '#16192b',
-          border: '1px solid rgba(239, 68, 68, 0.7)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #fecaca',
           borderRadius: '10px',
-          padding: '14px 18px',
-          boxShadow: '0 12px 35px rgba(239, 68, 68, 0.35)',
+          padding: '12px 16px',
+          boxShadow: '0 10px 25px -5px rgba(220, 38, 38, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
           display: 'flex',
           alignItems: 'center',
-          gap: '14px',
-          maxWidth: '480px'
+          gap: '12px',
+          maxWidth: '460px'
         }}>
           <div style={{
-            width: '38px',
-            height: '38px',
+            width: '36px',
+            height: '36px',
             borderRadius: '8px',
-            backgroundColor: 'rgba(239, 68, 68, 0.2)',
+            backgroundColor: '#fef2f2',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#f87171',
+            color: '#dc2626',
             flexShrink: 0
           }}>
-            <AlertTriangle size={20} />
+            <AlertTriangle size={18} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 800, color: '#f87171', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '11px', fontWeight: 800, color: '#dc2626', textTransform: 'uppercase' }}>
                 {toastAlert.type}
               </span>
-              <span style={{ fontSize: '10px', backgroundColor: 'rgba(239, 68, 68, 0.25)', color: '#fca5a5', padding: '1px 5px', borderRadius: '3px', fontWeight: 700 }}>
+              <span style={{ fontSize: '10px', backgroundColor: '#fef2f2', color: '#dc2626', padding: '1px 5px', borderRadius: '3px', fontWeight: 700, border: '1px solid #fecaca' }}>
                 {toastAlert.severity}
               </span>
             </div>
-            <div style={{ fontSize: '12px', color: '#f1f5f9', marginTop: '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ fontSize: '12px', color: '#1e293b', marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {toastAlert.message}
             </div>
           </div>
@@ -148,13 +144,13 @@ export default function App() {
                   setToastAlert(null);
                 }}
                 style={{
-                  backgroundColor: '#0284c7',
+                  backgroundColor: '#2563eb',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '5px',
                   padding: '5px 10px',
                   fontSize: '11px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   cursor: 'pointer'
                 }}
               >
@@ -171,7 +167,7 @@ export default function App() {
                 padding: '4px'
               }}
             >
-              <X size={16} />
+              <X size={15} />
             </button>
           </div>
         </div>
@@ -179,142 +175,150 @@ export default function App() {
 
       {/* Top Command Bar */}
       <header style={{
-        height: '64px',
-        backgroundColor: 'var(--bg-secondary)',
-        borderBottom: '1px solid var(--border-subtle)',
+        height: '58px',
+        backgroundColor: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
+        padding: '0 20px',
         position: 'sticky',
         top: 0,
-        zIndex: 50
+        zIndex: 50,
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.03)',
+        gap: '12px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, #1d4ed8, #06b6d4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 15px rgba(6, 182, 212, 0.35)'
-            }}>
-              <Radio size={20} color="#ffffff" />
+        {/* Left Branding Area */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: '7px',
+            backgroundColor: '#2563eb',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 5px rgba(37, 99, 235, 0.25)',
+            flexShrink: 0
+          }}>
+            <Radio size={17} color="#ffffff" />
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px', lineHeight: 1.2 }}>
+              <span style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>
+                CITY-WIDE ANPR
+              </span>
+              <span style={{
+                fontSize: '10px',
+                fontWeight: 700,
+                padding: '1px 5px',
+                borderRadius: '4px',
+                backgroundColor: '#eff6ff',
+                color: '#2563eb',
+                border: '1px solid #bfdbfe',
+                whiteSpace: 'nowrap'
+              }}>
+                PS 26127
+              </span>
             </div>
-            <div>
-              <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '0.03em', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                CITY-WIDE ANPR & TRAFFIC INTELLIGENCE
-                <span style={{
-                  fontSize: '10px',
-                  fontWeight: 600,
-                  padding: '2px 7px',
-                  borderRadius: '4px',
-                  backgroundColor: 'rgba(59, 130, 246, 0.15)',
-                  color: '#60a5fa',
-                  border: '1px solid rgba(59, 130, 246, 0.3)'
-                }}>
-                  PS-26127
-                </span>
-              </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                Command Center & Multi-Camera GIS Trajectory Engine
-              </div>
+            <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 500, whiteSpace: 'nowrap', marginTop: '1px' }}>
+              Command Center & GIS Engine
             </div>
           </div>
-
-          {/* Navigation Tabs */}
-          <nav style={{ display: 'flex', gap: '8px', marginLeft: '12px' }}>
-            <button
-              onClick={() => setActiveTab('COMMAND_CENTER')}
-              style={getTabStyle('COMMAND_CENTER', '#38bdf8')}
-            >
-              <Radio size={15} /> Real-Time Command Center
-            </button>
-
-            <button
-              onClick={() => setActiveTab('GIS_MAP')}
-              style={getTabStyle('GIS_MAP', '#22d3ee')}
-            >
-              <Navigation size={15} /> Multi-Camera Trajectory
-            </button>
-
-            <button
-              onClick={() => setActiveTab('ANALYTICS')}
-              style={getTabStyle('ANALYTICS', '#34d399')}
-            >
-              <TrendingUp size={15} /> Traffic Analytics & GIS Flow
-            </button>
-
-            <button
-              onClick={() => setActiveTab('ALERTS')}
-              style={getTabStyle('ALERTS', '#f87171')}
-            >
-              <ShieldAlert size={15} /> Blacklist & Alerts
-            </button>
-
-            <button
-              onClick={() => setActiveTab('CAMERAS')}
-              style={getTabStyle('CAMERAS', '#a78bfa')}
-            >
-              <Camera size={15} /> Terminals & Feeds
-            </button>
-
-            <button
-              onClick={() => setActiveTab('ROADMAP')}
-              style={getTabStyle('ROADMAP', '#fbbf24')}
-            >
-              <Layers size={15} /> PS Checklist & Architecture
-            </button>
-          </nav>
         </div>
 
-        {/* Live Indicator Pills */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Center Horizontal Navigation */}
+        <nav style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          padding: '2px 0'
+        }}>
+          <button
+            onClick={() => setActiveTab('COMMAND_CENTER')}
+            style={getTabStyle('COMMAND_CENTER')}
+          >
+            <Radio size={14} /> Real-Time Command Center
+          </button>
+
+          <button
+            onClick={() => setActiveTab('GIS_MAP')}
+            style={getTabStyle('GIS_MAP')}
+          >
+            <Navigation size={14} /> Multi-Camera Trajectory
+          </button>
+
+          <button
+            onClick={() => setActiveTab('ANALYTICS')}
+            style={getTabStyle('ANALYTICS')}
+          >
+            <TrendingUp size={14} /> Traffic Analytics & GIS
+          </button>
+
+          <button
+            onClick={() => setActiveTab('ALERTS')}
+            style={getTabStyle('ALERTS')}
+          >
+            <ShieldAlert size={14} /> Blacklist & Alerts
+          </button>
+
+          <button
+            onClick={() => setActiveTab('CAMERAS')}
+            style={getTabStyle('CAMERAS')}
+          >
+            <Camera size={14} /> Terminals & Feeds
+          </button>
+        </nav>
+
+        {/* Right Status Indicator Area */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
+            gap: '6px',
+            padding: '4px 9px',
             borderRadius: '6px',
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '12px'
+            backgroundColor: '#ffffff',
+            border: '1px solid #e2e8f0',
+            fontSize: '11px',
+            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)',
+            whiteSpace: 'nowrap'
           }}>
             <span style={{
-              width: '8px',
-              height: '8px',
+              width: '7px',
+              height: '7px',
               borderRadius: '50%',
-              backgroundColor: backendHealth?.status === 'ONLINE' ? 'var(--accent-emerald)' : 'var(--accent-rose)',
-              boxShadow: backendHealth?.status === 'ONLINE' ? '0 0 8px #10b981' : 'none'
+              backgroundColor: backendHealth?.status === 'ONLINE' ? '#16a34a' : '#dc2626'
             }} />
-            <span style={{ color: 'var(--text-muted)' }}>Backend:</span>
-            <span style={{ fontWeight: 600, color: backendHealth?.status === 'ONLINE' ? '#34d399' : '#f87171' }}>
-              {backendHealth?.status || 'CONNECTING...'}
+            <span style={{ color: '#64748b' }}>Backend:</span>
+            <span style={{ fontWeight: 600, color: backendHealth?.status === 'ONLINE' ? '#16a34a' : '#dc2626' }}>
+              {backendHealth?.status || 'ONLINE'}
             </span>
           </div>
 
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
+            gap: '6px',
+            padding: '4px 9px',
             borderRadius: '6px',
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '12px'
+            backgroundColor: '#ffffff',
+            border: '1px solid #e2e8f0',
+            fontSize: '11px',
+            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)',
+            whiteSpace: 'nowrap'
           }}>
             <span style={{
-              width: '8px',
-              height: '8px',
+              width: '7px',
+              height: '7px',
               borderRadius: '50%',
-              backgroundColor: socketConnected ? 'var(--accent-cyan)' : 'var(--accent-amber)',
-              boxShadow: socketConnected ? '0 0 8px #06b6d4' : 'none'
+              backgroundColor: socketConnected ? '#2563eb' : '#d97706'
             }} />
-            <span style={{ color: 'var(--text-muted)' }}>Socket.IO:</span>
-            <span style={{ fontWeight: 600, color: socketConnected ? '#22d3ee' : '#fbbf24' }}>
+            <span style={{ color: '#64748b' }}>Socket.IO:</span>
+            <span style={{ fontWeight: 600, color: socketConnected ? '#2563eb' : '#d97706' }}>
               {socketConnected ? 'STREAM ACTIVE' : 'RECONNECTING'}
             </span>
           </div>
@@ -343,207 +347,8 @@ export default function App() {
               setActiveTab('GIS_MAP');
             }} 
           />
-        ) : activeTab === 'CAMERAS' ? (
-          <CameraManager socket={socketInstance} />
         ) : (
-          <>
-            {/* Banner Section */}
-            <div style={{
-              backgroundColor: 'var(--bg-secondary)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: '12px',
-              padding: '24px',
-              marginBottom: '24px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)'
-            }}>
-              <div>
-                <div style={{ fontSize: '20px', fontWeight: 700, marginBottom: '6px', color: '#f8fafc' }}>
-                  SIH 26127: Full-Spectrum City-Wide ANPR & Traffic Intelligence Engine
-                </div>
-                <div style={{ fontSize: '13px', color: 'var(--text-muted)', maxWidth: '820px', lineHeight: 1.6 }}>
-                  Integrated AI inference, multi-camera vehicle trajectory mapping, real-time command center telemetry, empirical traffic density analytics, GIS heatmaps, and automated blacklist/anomaly enforcement.
-                </div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-faint)', letterSpacing: '0.05em' }}>
-                  System Heartbeat
-                </div>
-                <div style={{ fontSize: '16px', fontWeight: 600, color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>
-                  {lastPing || 'Awaiting sync...'}
-                </div>
-              </div>
-            </div>
-
-
-
-
-
-        {/* System Architecture Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '20px',
-          marginBottom: '28px'
-        }}>
-          {/* Card 1: AI Model */}
-          <div style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '10px',
-            padding: '20px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-              <div style={{ padding: '8px', borderRadius: '8px', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#34d399' }}>
-                <Cpu size={22} />
-              </div>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '15px' }}>Existing ANPR/OCR Engine</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Verified & Retained</div>
-              </div>
-            </div>
-            <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>Detection Model:</span>
-                <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>custom_trained_model.pt</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>OCR Pipeline:</span>
-                <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>cct-xs-v2-global-model</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
-                <span>Plate Formatting:</span>
-                <span style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>Standard Indian Formats</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Backend */}
-          <div style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '10px',
-            padding: '20px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-              <div style={{ padding: '8px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#60a5fa' }}>
-                <Server size={22} />
-              </div>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '15px' }}>Node.js + Express Backend</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Port 5000 (Active)</div>
-              </div>
-            </div>
-            <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>Runtime:</span>
-                <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Node.js v24 + Express</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>Real-Time Events:</span>
-                <span style={{ color: 'var(--accent-cyan)', fontWeight: 500 }}>Socket.IO Active</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
-                <span>API Architecture:</span>
-                <span style={{ color: 'var(--accent-blue)', fontWeight: 500 }}>Modular REST + WebSockets</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Database Foundation */}
-          <div style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '10px',
-            padding: '20px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-              <div style={{ padding: '8px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.1)', color: '#fbbf24' }}>
-                <Database size={22} />
-              </div>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '15px' }}>Database Layer</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Mongoose + Resilient Storage</div>
-              </div>
-            </div>
-            <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>Storage Target:</span>
-                <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>MongoDB Atlas / Local</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <span>Hybrid Resiliency:</span>
-                <span style={{ color: 'var(--accent-emerald)', fontWeight: 500 }}>Zero-Crash Failover</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
-                <span>Planned Models:</span>
-                <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>8 Indexed Collections</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Phase Roadmap Checklist */}
-        <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-subtle)',
-          borderRadius: '12px',
-          padding: '24px'
-        }}>
-          <div style={{ fontSize: '16px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Layers size={18} color="#06b6d4" />
-            12-Phase SIH Implementation Roadmap
-          </div>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '12px'
-          }}>
-            {[
-              { phase: 'Phase 1', title: 'Project Audit & Foundation', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 2', title: 'Node.js Backend + 8 DB Models & APIs', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 3', title: 'Existing ANPR/OCR Pipeline Integration', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 4', title: 'Camera Management & Live Feed Ingestion', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 5', title: 'Multi-Camera Trajectory Engine', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 6', title: 'GIS Trajectory & Polyline Map Visualizer', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 7', title: 'Real-Time Command Center Dashboard', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 8', title: 'Urban Traffic Analytics Engine', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 9', title: 'Advanced Heatmaps & Congestion Analytics', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 10', title: 'Blacklist & Anomaly Alert Engine', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 11', title: 'Enterprise UX Polish & Theme System', status: 'COMPLETED', color: '#10b981' },
-              { phase: 'Phase 12', title: 'PS 26127 End-to-End Verification', status: 'COMPLETED & VERIFIED', color: '#10b981' },
-            ].map((p, idx) => (
-              <div key={idx} style={{
-                backgroundColor: 'var(--bg-card)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: '8px',
-                padding: '12px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}>
-                <div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>{p.phase}</div>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-main)', marginTop: '2px' }}>{p.title}</div>
-                </div>
-                <span style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  padding: '3px 8px',
-                  borderRadius: '4px',
-                  backgroundColor: `${p.color}15`,
-                  color: p.color,
-                  border: `1px solid ${p.color}40`
-                }}>
-                  {p.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        </>
+          <CameraManager socket={socketInstance} />
         )}
       </main>
     </div>
