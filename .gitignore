@@ -1,0 +1,23 @@
+# Dependencies & builds
+node_modules/
+dist/
+
+# Secrets / local config
+.env
+.env.local
+*.local
+
+# Runtime uploads
+server/uploads/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.log
