@@ -1,0 +1,38 @@
+# Render Blueprint: deploys the Node backend and the React (Vite) frontend together.
+# Place this file in the ROOT of the repo (next to the client/, server/ and AI-Model/ folders).
+services:
+  # ---------- Backend: Node.js + Express + Socket.IO ----------
+  - type: web
+    name: anpr-backend
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      # Optional: MongoDB Atlas connection string. Leave empty to run in the built-in
+      # in-memory/JSON fallback mode (data resets when the free instance restarts).
+      - key: MONGODB_URI
+        sync: false
+
+  # ---------- Frontend: React + Vite static site ----------
+  - type: web
+    name: anpr-frontend
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      # Public URL of the backend service above. If Render gives your backend a different
+      # URL (e.g. because the name was taken), change this value and redeploy the frontend.
+      - key: VITE_API_URL
+        value: https://anpr-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
