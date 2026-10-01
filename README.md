@@ -350,12 +350,8 @@ python main.py
 ---
 
 ## 👥 Team
+| *Team Name* - StackTrace|
 
-| Name | Role |
-|---|---|
-| *Team Name* | *SIH Team ID* |
-| *Member 1* | *Role* |
-| *Member 2* | *Role* |
 
 ---
 
