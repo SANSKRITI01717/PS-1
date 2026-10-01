@@ -31,7 +31,7 @@ services:
       # Public URL of the backend service above. If Render gives your backend a different
       # URL (e.g. because the name was taken), change this value and redeploy the frontend.
       - key: VITE_API_URL
-        value: https://anpr-backend.onrender.com
+        value: https://anpr-backend-eeyh.onrender.com
     routes:
       - type: rewrite
         source: /*
