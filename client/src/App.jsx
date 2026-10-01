@@ -46,7 +46,7 @@ export default function App() {
     const interval = setInterval(checkHealth, 5000);
 
     // Socket.io connection
-    const socket = io('/', { transports: ['websocket', 'polling'] });
+    const socket = io(import.meta.env.VITE_API_URL || '/', { transports: ['websocket', 'polling'] });
     setSocketInstance(socket);
 
     socket.on('connect', () => {
