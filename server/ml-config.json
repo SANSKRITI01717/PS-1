@@ -1,0 +1,4 @@
+{
+  "_help": "Paste the public link of the deployed ML service between the quotes below (example: https://anpr-ml.onrender.com). No slash at the end. The environment variable ML_URL, if set on Render, takes priority over this file.",
+  "mlUrl": "https://ml-68pj.onrender.com"
+}
