@@ -6,6 +6,7 @@ import {
   Navigation,
   TrendingUp,
   ShieldAlert,
+  UploadCloud,
   X
 } from 'lucide-react';
 import io from 'socket.io-client';
@@ -14,6 +15,7 @@ import GISTrajectoryMap from './components/GISTrajectoryMap';
 import CommandCenterDashboard from './components/CommandCenterDashboard';
 import TrafficAnalyticsView from './components/TrafficAnalyticsView';
 import AlertsManager from './components/AlertsManager';
+import UploadDetect from './components/UploadDetect';
 
 export default function App() {
   const [backendHealth, setBackendHealth] = useState(null);
@@ -21,7 +23,7 @@ export default function App() {
   const [socketInstance, setSocketInstance] = useState(null);
   const [lastPing, setLastPing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('COMMAND_CENTER'); // 'COMMAND_CENTER' | 'GIS_MAP' | 'ANALYTICS' | 'ALERTS' | 'CAMERAS' | 'ROADMAP'
+  const [activeTab, setActiveTab] = useState('COMMAND_CENTER'); // 'COMMAND_CENTER' | 'GIS_MAP' | 'ANALYTICS' | 'ALERTS' | 'CAMERAS' | 'UPLOAD' | 'ROADMAP'
   const [selectedTrajectoryPlate, setSelectedTrajectoryPlate] = useState('MP04AB1234');
   const [toastAlert, setToastAlert] = useState(null);
 
@@ -271,6 +273,13 @@ export default function App() {
           >
             <Camera size={14} /> Terminals & Feeds
           </button>
+
+          <button
+            onClick={() => setActiveTab('UPLOAD')}
+            style={getTabStyle('UPLOAD')}
+          >
+            <UploadCloud size={14} /> Upload & Detect
+          </button>
         </nav>
 
         {/* Right Status Indicator Area */}
@@ -346,6 +355,13 @@ export default function App() {
               setSelectedTrajectoryPlate(plate);
               setActiveTab('GIS_MAP');
             }} 
+          />
+        ) : activeTab === 'UPLOAD' ? (
+          <UploadDetect
+            onNavigateToTrajectory={(plate) => {
+              setSelectedTrajectoryPlate(plate);
+              setActiveTab('GIS_MAP');
+            }}
           />
         ) : (
           <CameraManager socket={socketInstance} />

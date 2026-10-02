@@ -164,6 +164,25 @@ router.post('/process-image', upload.single('image'), async (req, res, next) => 
       io
     });
 
+    // Uploaded frames get the same alert handling as the other ingestion paths
+    if (result && Array.isArray(result.records)) {
+      for (const rec of result.records) {
+        if (rec.isDuplicate) continue;
+        if (io && rec.alertTriggered) io.emit('alert:new', rec.alertTriggered);
+        try {
+          const anomalyAlert = await AnomalyDetector.evaluateDetection(rec, io);
+          if (anomalyAlert) rec.anomalyAlert = anomalyAlert;
+        } catch (e) {
+          console.warn('[Detections] Anomaly check failed:', e.message);
+        }
+      }
+    }
+
+    // AI failures come back as success:false; keep the HTTP status honest for the UI
+    if (result && result.success === false) {
+      return res.status(502).json(result);
+    }
+
     res.json({
       success: true,
       ...result

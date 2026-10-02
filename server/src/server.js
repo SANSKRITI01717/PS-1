@@ -15,6 +15,7 @@ import blacklistRouter from './routes/blacklist.js';
 import alertsRouter from './routes/alerts.js';
 import commandCenterRouter from './routes/commandCenter.js';
 import analyticsRouter from './routes/analytics.js';
+import mlRouter from './routes/ml.js';
 
 dotenv.config();
 
@@ -63,6 +64,7 @@ app.use('/api/blacklist', blacklistRouter);
 app.use('/api/alerts', alertsRouter);
 app.use('/api/command-center', commandCenterRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/ml', mlRouter);
 
 
 
