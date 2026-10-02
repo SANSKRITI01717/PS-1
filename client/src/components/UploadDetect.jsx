@@ -377,7 +377,9 @@ export default function UploadDetect({ onNavigateToTrajectory }) {
   const ratio = dims ? dims.w / dims.h : 16 / 9;
   const mlNone = mlStatus && mlStatus.mode === 'none';
 
-  const engine = !mlStatus
+  const engine = busy
+    ? { color: '#2563eb', text: 'AI engine is analysing your file…' }
+    : !mlStatus
     ? { color: '#94a3b8', text: 'Checking AI engine…' }
     : mlStatus.online
       ? { color: '#16a34a', text: mlStatus.mode === 'local' ? 'AI engine ready (local)' : `AI engine connected${mlStatus.latencyMs ? ` · ${mlStatus.latencyMs} ms` : ''}` }
@@ -517,6 +519,14 @@ export default function UploadDetect({ onNavigateToTrajectory }) {
           )}
 
           {/* verified OCR results */}
+          {phase === 'done' && !allFailed && (
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+              Checked <strong>{frames.length}</strong> frame{frames.length > 1 ? 's' : ''}:{' '}
+              <strong>{frames.filter((f) => f.result && (f.result.records || []).length > 0).length}</strong> with a readable plate,{' '}
+              <strong>{frames.filter((f) => f.status === 'done' && !(f.result && (f.result.records || []).length > 0)).length}</strong> without
+              {errors.length > 0 && <>, <strong style={{ color: '#b91c1c' }}>{errors.length} failed</strong></>}.
+            </div>
+          )}
           {phase === 'done' && !allFailed && (
             <div style={{ ...card, overflow: 'hidden' }}>
               <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', borderBottom: '1px solid var(--border-subtle)' }}>

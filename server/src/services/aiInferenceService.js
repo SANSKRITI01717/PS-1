@@ -53,15 +53,41 @@ function runLocalInference(imagePath, minConf, ocrFloor) {
 }
 
 async function runRemoteInference(imagePath, minConf, ocrFloor) {
-  const form = new FormData();
-  form.append('image', new Blob([fs.readFileSync(imagePath)]), path.basename(imagePath));
-  form.append('conf', String(minConf));
-  form.append('ocr_floor', String(ocrFloor));
-  console.log(`[AI Pipeline] Calling ML service: ${ML_URL}/predict`);
-  // 90s: free hosts may need time to wake up on the first request
-  const res = await fetch(`${ML_URL}/predict`, { method: 'POST', body: form, signal: AbortSignal.timeout(90000) });
-  if (!res.ok) throw new Error(`ML service responded ${res.status}`);
-  return res.json();
+  const bytes = fs.readFileSync(imagePath);
+  // A free ML host answers 502/503/504 while it is waking up or restarting: wait and try again.
+  const RETRY_STATUS = new Set([502, 503, 504]);
+  const waitsMs = [0, 5000, 12000];
+  let lastErr = new Error('AI server did not answer.');
+  for (const waitMs of waitsMs) {
+    if (waitMs) await new Promise((r) => setTimeout(r, waitMs));
+    try {
+      const form = new FormData(); // a fresh body for every attempt
+      form.append('image', new Blob([bytes]), path.basename(imagePath));
+      form.append('conf', String(minConf));
+      form.append('ocr_floor', String(ocrFloor));
+      console.log(`[AI Pipeline] Calling ML service: ${ML_URL}/predict`);
+      // 90s: free hosts may need time to wake up on the first request
+      const res = await fetch(`${ML_URL}/predict`, { method: 'POST', body: form, signal: AbortSignal.timeout(90000) });
+      if (res.ok) return await res.json();
+      if (RETRY_STATUS.has(res.status)) {
+        lastErr = new Error(`AI server is not responding (HTTP ${res.status}). It may be starting up or restarting. Please try again in a minute.`);
+        console.warn(`[AI Pipeline] ML service answered ${res.status}, retrying…`);
+        continue;
+      }
+      let detail = '';
+      try { const t = await res.text(); try { detail = JSON.parse(t).error || t; } catch (e) { detail = t; } } catch (e) { /* no body */ }
+      throw new Error(`ML service responded ${res.status}${detail ? ': ' + String(detail).slice(0, 200) : ''}`);
+    } catch (e) {
+      if (e.name === 'TypeError') { // connection refused / reset: the host is probably restarting
+        lastErr = new Error('Cannot reach the AI server. It may be starting up. Please try again in a minute.');
+        console.warn('[AI Pipeline] Cannot reach ML service, retrying…', e.cause ? e.cause.code : e.message);
+        continue;
+      }
+      if (e.name === 'TimeoutError') throw new Error('The AI server took too long to answer (over 90 seconds). Please try again.');
+      throw e;
+    }
+  }
+  throw lastErr;
 }
 
 // Is the AI engine reachable? Used by the UI (and it also wakes a sleeping free-tier ML service).
@@ -69,7 +95,7 @@ export async function getMlStatus() {
   if (ML_URL) {
     const t0 = Date.now();
     try {
-      const res = await fetch(`${ML_URL}/health`, { signal: AbortSignal.timeout(8000) });
+      const res = await fetch(`${ML_URL}/health`, { signal: AbortSignal.timeout(20000) });
       return { mode: 'remote', configured: true, online: res.ok, waking: false, latencyMs: Date.now() - t0, host: new URL(ML_URL).host };
     } catch (e) {
       // timeout / connection error: a free host that is asleep usually answers after ~30-60s
