@@ -246,7 +246,7 @@ A detection matching a watch-listed plate triggers a real-time alert on the dash
 | **Frontend** | Web dashboard with live maps, heatmaps and charts |
 | **Matching** | Levenshtein distance, confidence-weighted association |
 
-> 📝 *Edit this table to match the exact libraries and frameworks used in your repository.*
+
 
 ---
 
@@ -279,13 +279,13 @@ We clearly separate what is **working today** from what the **production design*
 |---|---|---|
 | OCR accuracy | > 90% | **96%** |
 
-> 📝 *Add test conditions (dataset size, lighting/weather mix, number of plates) and screenshots/graphs here so reviewers can verify the result.*
+
 
 ---
 
 ## ⚙️ Installation & Usage
 
-> 📝 *Replace the placeholders below with your real commands.*
+
 
 ```bash
 # 1. Clone the repository
@@ -329,7 +329,7 @@ python main.py
 └── README.md
 ```
 
-> 📝 *Adjust to your actual folder layout.*
+
 
 ---
 
